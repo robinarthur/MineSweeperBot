@@ -55,6 +55,25 @@ def get_cords():
     y = y - y_pad
     print(x,y)
 
+def startGame():
+    #location of the dificulty level easy
+    mousePos((112,96))
+    leftClick()
+    time.sleep(.1)
+
+'''
+    #location of dificulty level medium
+    mousePos((121,115))
+    leftClick()
+    time.sleep(.1)
+
+    #location of dificulty level hard
+    mousePos((107,137))
+    leftClick()
+    time.sleep(.1)
+
+
+'''
 def main():
     pass
 
