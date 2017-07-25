@@ -4,7 +4,7 @@ from PIL import ImageGrab, ImageOps
 import os
 import time
 import win32api, win32con
-import numpy
+import numpy as np
 
 """
 All coordinates assume a screen resolution of 1366x768, and the App is "minimized"
@@ -30,23 +30,7 @@ grid_columns = {'easy':10,
                 'hard':30
 }
 
-# pixel of the numbers to detect one pixel every number have
-number_rows = {'1':11,
-               '2':11,
-               '3':,
-               '4':,
-               '5':
-}
 
-number_columns = {'1':17,
-                  '2':17,
-                  '3':,
-                  '4':,
-                  '5':
-
-
-
-}
 
 '''
 Es wird als erstes ein Screenshot gemacht
@@ -58,6 +42,23 @@ def screenGrab():
 
     #im.save(os.getcwd() + '\\full_snap__' + str(int(time.time())) +'.png', 'PNG')
     return im
+
+def Grab():
+    box = (x_pad + 1, y_pad + 1, x_pad + 301, y_pad + 351)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = np.array(im.getcolors())
+    a = a.sum()
+    print(a)
+    return a
+
+def get_square_one_one():
+    box = (6,57,6+30,57+30)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = np.array(im.getcolors())
+    a = a.sum()
+    print(a)
+    im.save(os.getcwd() +  '\\square_1_1__' + str(int(time.time())) + '.png', 'PNG')
+    return a
 
 
 def leftClick():
@@ -87,7 +88,7 @@ def get_cords():
 
 def startGame():
     #location of the dificulty level easy
-    mousePos((112,96))
+    mousePos((101,169))
     leftClick()
     time.sleep(.1)
 '''
