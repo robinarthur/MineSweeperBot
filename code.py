@@ -20,16 +20,15 @@ x_pad = 99
 y_pad = 49
 
 # bombingfield (x = rows, y = columns)
-grid_rows = {'easy':10,
-             'medium':10,
-             'hard':10
+grid_rows = {'easy':9,
+             'medium':16,
+             'expert':30
 }
 
-grid_columns = {'easy':10,
-                'medium':20,
-                'hard':30
+grid_columns = {'easy':9,
+                'medium':16,
+                'hard':16
 }
-
 
 
 '''
@@ -50,9 +49,13 @@ def Grab():
     a = a.sum()
     print(a)
     return a
+'''
+if get_square_one_one() == 14280 then blue/ not known
+if get_square_one_one() == 23961 then white/ no bombs nearby
+'''
 
 def get_square_one_one():
-    box = (6,57,6+30,57+30)
+    box = (x_pad+34,y_pad+89,x_pad+73,y_pad+129)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = np.array(im.getcolors())
     a = a.sum()
@@ -88,7 +91,7 @@ def get_cords():
 
 def startGame():
     #location of the dificulty level easy
-    mousePos((101,169))
+    mousePos((103,212))
     leftClick()
     time.sleep(.1)
 '''
