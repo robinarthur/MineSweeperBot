@@ -81,10 +81,19 @@ def leftDown():
     time.sleep(.1)
     print('left Down')
 
+def rightDown():
+    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
+    time.sleep(.1)
+    print('right Down')
+
 def leftUp():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
     time.sleep(.1)
     print('left release')
+
+def rightUp():
+    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
+    print('right release')
 
 def mousePos(cord):
     win32api.SetCursorPos((x_pad + cord[0], y_pad + cord[1]))
