@@ -49,6 +49,8 @@ def Grab():
     a = a.sum()
     print(a)
     return a
+
+
 '''
 if get_square_one_one() == 14280 then blue/ not known
 if get_square_one_one() == 23961 then white/ no bombs nearby
@@ -63,6 +65,10 @@ def get_square_one_one():
     im.save(os.getcwd() +  '\\square_1_1__' + str(int(time.time())) + '.png', 'PNG')
     return a
 
+
+'''
+MOUSE Movements + differnt Clicks
+'''
 
 def leftClick():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
@@ -110,15 +116,7 @@ def startGame():
     leftClick()
     time.sleep(.1)
 '''
-    #location of dificulty level medium
-    mousePos((121,115))
-    leftClick()
-    time.sleep(.1)
 
-    #location of dificulty level hard
-    mousePos((107,137))
-    leftClick()
-    time.sleep(.1)
 '''
 class Cord:
     #how many bombs remaining
