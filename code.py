@@ -7,17 +7,17 @@ import win32api, win32con
 import numpy as np
 
 """
-All coordinates assume a screen resolution of 1366x768, and the App is "minimized"
-to the top left corner.
-x_pad = 99
-y_pad = 49
-Play area =  x_pad+1, y_pad+1, 301, 351
+All coordinates assume a screen resolution of 1366x768, and the App is the left
+half of the screen
+x_pad = 85
+y_pad = 142
+Play area =  x_pad+1, y_pad+1, 595, 654
 """
 
 # Globals
 #------------
-x_pad = 99
-y_pad = 49
+x_pad = 85
+y_pad = 142
 
 # bombingfield (x = rows, y = columns)
 grid_rows = {'easy':9,
@@ -36,14 +36,14 @@ Es wird als erstes ein Screenshot gemacht
 '''
 
 def screenGrab():
-    bl = (x_pad + 1, y_pad + 1, x_pad + 301, y_pad + 351)
+    bl = (x_pad + 1, y_pad + 1, x_pad + 595, y_pad + 654)
     im = ImageGrab.grab()
 
     #im.save(os.getcwd() + '\\full_snap__' + str(int(time.time())) +'.png', 'PNG')
     return im
 
 def Grab():
-    box = (x_pad + 1, y_pad + 1, x_pad + 301, y_pad + 351)
+    box = (x_pad + 1, y_pad + 1, x_pad + 595, y_pad + 654)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = np.array(im.getcolors())
     a = a.sum()
@@ -57,7 +57,16 @@ if get_square_one_one() == 23961 then white/ no bombs nearby
 '''
 
 def get_square_one_one():
-    box = (x_pad+34,y_pad+89,x_pad+73,y_pad+129)
+    box = (x_pad,y_pad,135,191)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = np.array(im.getcolors())
+    a = a.sum()
+    print(a)
+    im.save(os.getcwd() +  '\\square_1_1__' + str(int(time.time())) + '.png', 'PNG')
+    return a
+
+def get_square_one_two():
+    box = (x_pad+58,y_pad,x_pad+108,y_pad+53)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = np.array(im.getcolors())
     a = a.sum()
@@ -116,7 +125,7 @@ def startGame():
     leftClick()
     time.sleep(.1)
 '''
-
+bezieht sich noch auf das alte Spiel
 '''
 class Cord:
     #how many bombs remaining
