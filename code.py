@@ -68,7 +68,13 @@ def leftClick():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
     time.sleep(.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-    print( "Click")    #completly optional. But nice for debugging purposes.
+    print('left Click')    #completly optional. But nice for debugging purposes.
+
+def rightClick():
+    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
+    time.sleep(.1)
+    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
+    print('right Click')
 
 def leftDown():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
