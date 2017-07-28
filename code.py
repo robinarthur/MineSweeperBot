@@ -52,12 +52,13 @@ def Grab():
 
 
 '''
-if get_square_one_one() == 14280 then blue/ not known
-if get_square_one_one() == 23961 then white/ no bombs nearby
+if get_square_one_one() == 11404 then blue/ not known
+if get_square_one_one() == 27729 then white/ no bombs nearby
+if get_square_one_one() == 29749 then white with 1 / 1 bomb is nearby
 '''
 
 def get_square_one_one():
-    box = (x_pad,y_pad,135,191)
+    box = (x_pad,y_pad,x_pad+51,y_pad+46)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = np.array(im.getcolors())
     a = a.sum()
@@ -66,12 +67,21 @@ def get_square_one_one():
     return a
 
 def get_square_one_two():
-    box = (x_pad+58,y_pad,x_pad+108,y_pad+53)
+    box = (x_pad+2,y_pad+2,x_pad+108,y_pad+53)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = np.array(im.getcolors())
     a = a.sum()
     print(a)
-    im.save(os.getcwd() +  '\\square_1_1__' + str(int(time.time())) + '.png', 'PNG')
+    im.save(os.getcwd() +  '\\square_1_2__' + str(int(time.time())) + '.png', 'PNG')
+    return a
+
+def get_square_two_one():
+    box = (x_pad+2,y_pad+59,x_pad+51,y_pad+103)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = np.array(im.getcolors())
+    a = a.sum()
+    print(a)
+    im.save(os.getcwd() +  '\\square_2_1__' + str(int(time.time())) + '.png', 'PNG')
     return a
 
 
