@@ -53,31 +53,40 @@ def Grab():
 
 '''
 if get_square_one_one() == 11404 then blue/ not known
-if get_square_one_one() == 27729 then white/ no bombs nearby
+if get_square_one_one() == 5606/5605 then white/ no bombs nearby
 if get_square_one_one() == 29749 then white with 1 / 1 bomb is nearby
 '''
 
+
+'''
+its a bit difficult, because the game has a 3D effect, thats why t x-value of
+the flags are a bit lower then the number values. But, you have to click, before
+a flag is set. This could be stored before processing
+
+Flag = 22x25
+2 = 15x24
+'''
 def get_square_one_one():
-    box = (x_pad,y_pad,x_pad+51,y_pad+46)
+    box = (x_pad+18,y_pad+12,x_pad+40,y_pad+37)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = np.array(im.getcolors())
     a = a.sum()
     print(a)
     im.save(os.getcwd() +  '\\square_1_1__' + str(int(time.time())) + '.png', 'PNG')
     return a
-
+''' funktioniert nicht'''
 def get_square_one_two():
-    box = (x_pad+2,y_pad+2,x_pad+108,y_pad+53)
+    box = (x_pad+78,y_pad+15,x_pad+93,y_pad+39)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = np.array(im.getcolors())
     a = a.sum()
     print(a)
     im.save(os.getcwd() +  '\\square_1_2__' + str(int(time.time())) + '.png', 'PNG')
     return a
-
+''''''
 def get_square_two_one():
-    box = (x_pad+2,y_pad+59,x_pad+51,y_pad+103)
-    im = ImageOps.grayscale(ImageGrab.grab(box))
+    box = (x_pad+18,y_pad+69,x_pad+40,y_pad+94)
+    im = ImageGrab.grab(box)
     a = np.array(im.getcolors())
     a = a.sum()
     print(a)
