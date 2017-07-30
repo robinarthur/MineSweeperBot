@@ -1,4 +1,4 @@
-# This is a simple Bot playing MineSweeper build with pythen and OpenCV
+# This is a simple Bot playing MineSweeper build with Python and OpenCV
 
 
 MineSweeper from Microsoft. It can be downloaded from the windows Store
