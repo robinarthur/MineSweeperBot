@@ -1,4 +1,4 @@
-#! C:\Users\tank\Anaconda3\python.exe
+#! C:\Users\ckr\Anaconda3\python.exe
 
 from PIL import ImageGrab, ImageOps
 import os
@@ -50,7 +50,7 @@ def Grab():
     a = a.sum()
     print(a)
     return a
-    
+
 def grid_recognition():
     img = cv2.imread(screenGrab())
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
