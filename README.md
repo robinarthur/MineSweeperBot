@@ -1,5 +1,5 @@
 # This is a simple Bot playing MineSweeper build with Python and OpenCV
-
+# after many hours of struggling with opencv and windows i have to switch to python 2.7
 
 MineSweeper from Microsoft. It can be downloaded from the windows Store
 for Free
