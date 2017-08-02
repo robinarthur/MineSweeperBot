@@ -182,7 +182,8 @@ class Cord:
 
 
 def main():
-    pass
+    #pass
+    grid_recognition()
 
 if __name__ == '__main__':
     main()
