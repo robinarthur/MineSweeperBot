@@ -5,7 +5,7 @@ import os
 import time
 import win32api, win32con
 import numpy as np
-import cv2
+#import cv2
 
 """
 All coordinates assume a screen resolution of 1366x768, and the App is the left
@@ -37,11 +37,11 @@ Es wird als erstes ein Screenshot gemacht
 '''
 
 def screenGrab():
-    bl = (x_pad + 1, y_pad + 1, x_pad + 595, y_pad + 654)
+    bl = (x_pad + 1, y_pad + 1, x_pad + 432, y_pad + 356)
     im = ImageGrab.grab()
 
-    #im.save(os.getcwd() + '\\full_snap__' + str(int(time.time())) +'.png', 'PNG')
-    return im
+    im.save(os.getcwd() + '\\full_snap__' + str(int(time.time())) +'.png', 'PNG')
+    #return im
 
 def Grab():
     box = (x_pad + 1, y_pad + 1, x_pad + 595, y_pad + 654)
@@ -182,8 +182,7 @@ class Cord:
 
 
 def main():
-    #pass
-    grid_recognition()
+    pass
 
 if __name__ == '__main__':
     main()
