@@ -9,7 +9,7 @@ if PY3:
     xrange = range
 
 from glob import glob
-from PIL import ImageGrab, ImageOps
+from PIL import ImageGrab, ImageOps # funktioniert gerade nur unter python 3.x
 import os
 import time
 import win32api, win32con
