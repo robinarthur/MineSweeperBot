@@ -61,27 +61,6 @@ def Grab():
     print(a)
     return a
 
-def grid_recognition():
-    img = cv2.imread(screenGrab())
-    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray,50,150,apertureSize = 3)
-
-    lines = cv2.HoughLines(edges, 1, np.pi/180, 200)
-    for rho, theta in lines[0]:
-        a = np.cos(theta)
-        b = np.sin(theta)
-        x0 = a * rho
-        y0 = b * rho
-        x1 = int(x0 + 1000 * (-b))
-        y1 = int(y0 + 1000 * (a))
-        x2 = int(x0 - 1000 * (-b))
-        y2 = int(y0 - 1000 * (a))
-
-        cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
-
-    cv2.imwrite('houghlines3.jpg', img)
-    print('Grid detected')
-
 def angle_cos(p0, p1, p2):
     d1, d2 = (p0-p1).astype('float'), (p2-p1).astype('float')
     return abs( np.dot(d1, d2) / np.sqrt( np.dot(d1, d1)*np.dot(d2, d2) ) )
@@ -118,12 +97,6 @@ def square_recognition():
             break
     cv2.destroyAllWindows()
 
-'''
-if get_square_one_one() == 11404 then blue/ not known
-if get_square_one_one() == 5606/5605 then white/ no bombs nearby
-if get_square_one_one() == 29749 then white with 1 / 1 bomb is nearby
-'''
-
 
 '''
 its a bit difficult, because the game has a 3D effect, thats why t x-value of
@@ -133,32 +106,6 @@ a flag is set. This could be stored before processing
 Flag = 22x25
 2 = 15x24
 '''
-def get_square_one_one():
-    box = (x_pad+18,y_pad+12,x_pad+40,y_pad+37)
-    im = ImageOps.grayscale(ImageGrab.grab(box))
-    a = np.array(im.getcolors())
-    a = a.sum()
-    print(a)
-    im.save(os.getcwd() +  '\\square_1_1__' + str(int(time.time())) + '.png', 'PNG')
-    return a
-''' funktioniert nicht'''
-def get_square_one_two():
-    box = (x_pad+78,y_pad+15,x_pad+93,y_pad+39)
-    im = ImageOps.grayscale(ImageGrab.grab(box))
-    a = np.array(im.getcolors())
-    a = a.sum()
-    print(a)
-    im.save(os.getcwd() +  '\\square_1_2__' + str(int(time.time())) + '.png', 'PNG')
-    return a
-''''''
-def get_square_two_one():
-    box = (x_pad+18,y_pad+69,x_pad+40,y_pad+94)
-    im = ImageGrab.grab(box)
-    a = np.array(im.getcolors())
-    a = a.sum()
-    print(a)
-    im.save(os.getcwd() +  '\\square_2_1__' + str(int(time.time())) + '.png', 'PNG')
-    return a
 
 
 '''
@@ -210,19 +157,6 @@ def startGame():
     mousePos((103,212))
     leftClick()
     time.sleep(.1)
-'''
-bezieht sich noch auf das alte Spiel
-'''
-class Cord:
-    #how many bombs remaining
-    m_Bombs = (254, 16)
-    m_Smiley = (144, 16)
-    bomb_field_1_1 = (15, 69)
-    bomb_field_1_10 = (281, 69)
-    bomb_field_10_1 = (19, 344)
-    bomb_field_10_10 = (281, 344)
-    background = (452, 477)
-
 
 
 
