@@ -5,5 +5,6 @@ __pycache__
 .cache
 .bashrc
 .local
+.ipynb_checkpoints
 opencv
 opencv_contrib
