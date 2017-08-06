@@ -1,5 +1,6 @@
 
-dir_to_ignore/__pycache__
-dir_to_ignore/.vagrant
-dir_to_ignore/.virtualenvs
-dir_to_ignore/.cache
+__pycache__
+.vagrant
+.virtualenvs
+.cache
+.bashrc
