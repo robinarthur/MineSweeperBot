@@ -26,8 +26,8 @@ source /usr/local/bin/virtualenvwrapper.sh
 mkvirtualenv cv
 
 sudo apt-get install -y python3.4-dev
-pip install numpy
-pip install ipython
+pip3 install numpy --user
+pip install ipython --user
 
 cd ~
 git clone https://github.com/Itseez/opencv.git
