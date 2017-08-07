@@ -8,6 +8,6 @@ Vagrant.configure(2) do |config|
   end
 
   config.ssh.forward_x11 = true
-  config.vm.provision :shell, path: "provisioning/bootstrap.sh", privileged: false
+  # config.vm.provision :shell, path: "provisioning/bootstrap.sh", privileged: false
   config.vm.synced_folder "c:/Users/CKr/Documents/GitHub/MineSweeperBot", "/home/vagrant/"
 end

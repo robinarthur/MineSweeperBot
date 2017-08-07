@@ -1,59 +1,22 @@
 #!/usr/bin/env bash
 
+sudo add-apt-repository ppa:fkrull/deadsnakes -y
 sudo apt-get update
 sudo apt-get upgrade -y
-
-sudo apt-get install -y build-essential cmake git pkg-config
-sudo apt-get install -y libjpeg8-dev libtiff5-dev libjasper-dev libpng12-dev
-sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
-sudo apt-get install -y libgtk2.0-dev
-sudo apt-get install -y libatlas-base-dev gfortran
-
-wget https://bootstrap.pypa.io/get-pip.py
-sudo python3 get-pip.py
-rm get-pip.py
-
-sudo pip3 install virtualenv virtualenvwrapper
-
-echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> ~/.bashrc
-echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
-echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
-
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
-
-mkvirtualenv cv
-
-sudo apt-get install -y python3.4-dev
-pip3 install numpy --user
-pip install ipython --user
-
-cd ~
-git clone https://github.com/Itseez/opencv.git
-cd opencv
-git checkout 3.1.0
-
-cd ~
-git clone https://github.com/Itseez/opencv_contrib.git
-cd opencv_contrib
-git checkout 3.1.0
-
-cd ~/opencv
-mkdir build
-cd build
-
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
-	-D CMAKE_INSTALL_PREFIX=/usr/local \
-	-D INSTALL_C_EXAMPLES=OFF \
-	-D INSTALL_PYTHON_EXAMPLES=ON \
-	-D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
-	-D BUILD_EXAMPLES=ON ..
-
-make -j4
-
-sudo make install
-sudo ldconfig
-
-cd ~/.virtualenvs/cv/lib/python3.4/site-packages/
-ln -s /usr/local/lib/python3.4/site-packages/cv2.cpython-34m.so cv2.so
+sudo apt-get install python3.5 -y
+# Required dependencies
+sudo apt-get install build-essential -y
+sudo apt-get install cmake -y
+sudo apt-get install git -y
+sudo apt-get install libgtk2.0-dev -y
+sudo apt-get install pkg-config -y
+sudo apt-get install libavcodec-dev -y
+sudo apt-get install libavformat-dev -y
+sudo apt-get install libswscale-dev -y
+# If you use a non-system copy of Python (eg. with pyenv or virtualenv), then you probably don't need to do this part
+sudo apt-get install python3.5-dev -y
+sudo apt-get install libpython3-dev -y
+sudo apt-get install python3-numpy -y
+# Optional, but installing these will ensure you have the latest versions compiled with OpenCV
+sudo apt install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev
+libdc1394-22-dev
