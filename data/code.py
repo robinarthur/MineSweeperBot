@@ -1,5 +1,4 @@
-#! C:\Users\ckr\Anaconda3\python.exe
-
+#!/usr/bin/python2.7
 
 # Python 2/3 compatibility
 import sys
