@@ -6,24 +6,25 @@ PY3 = sys.version_info[0] == 3
 
 if PY3:
     xrange = range
+    from PIL import ImageOps, ImageGrab
+else:
+    from Pillow import ImageOps, ImageGrab
 
 from glob import glob
-from PIL import ImageGrab, ImageOps # funktioniert gerade nur unter python 3.x
 import os
 import time
-import win32api, win32con
+# import win32api, win32con # only on windows
 import numpy as np
 import cv2# funktioniert gerade nur unter python2.7
 
 
-"""
-All coordinates assume a screen resolution of 1366x768, and the App is the left
-half of the screen
-x_pad = 85
-y_pad = 142
-Play area =  x_pad+1, y_pad+1, 595, 654
-"""
-
+# --- Globals ---
+# All coordinates assume a screen resolution of 1366x768, and the App is the left
+# half of the screen
+# x_pad = 85
+# y_pad = 142
+# Play area =  x_pad+1, y_pad+1, 595, 654
+# ---
 # Globals
 #------------
 x_pad = 85
@@ -41,9 +42,9 @@ grid_columns = {'easy':9,
 }
 
 
-'''
-Es wird als erstes ein Screenshot gemacht
-'''
+# Es wird als erstes ein Screenshot gemacht
+#
+#
 
 def screenGrab():
     bl = (x_pad + 1, y_pad + 1, x_pad + 432, y_pad + 356)
@@ -96,15 +97,18 @@ def square_recognition():
             break
     cv2.destroyAllWindows()
 
+def sort_squares():
+    pass
 
-'''
-its a bit difficult, because the game has a 3D effect, thats why t x-value of
-the flags are a bit lower then the number values. But, you have to click, before
-a flag is set. This could be stored before processing
 
-Flag = 22x25
-2 = 15x24
-'''
+#
+# its a bit difficult, because the game has a 3D effect, thats why the x-value of
+# the flags are a bit lower then the number values. But, you have to click, before
+# a flag is set. This could be stored before processing
+#
+# Flag = 22x25
+# 2 = 15x24
+# 
 
 
 '''
