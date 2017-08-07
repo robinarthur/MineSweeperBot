@@ -8,12 +8,13 @@ if PY3:
     xrange = range
     from PIL import ImageOps, ImageGrab
 else:
-    from Pillow import ImageOps, ImageGrab
+    pass
+    #from Pillow import ImageOps, ImageGrab
 
 from glob import glob
 import os
 import time
-# import win32api, win32con # only on windows
+#import win32api, win32con # only on windows
 import numpy as np
 import cv2# funktioniert gerade nur unter python2.7
 
@@ -98,7 +99,12 @@ def square_recognition():
     cv2.destroyAllWindows()
 
 def sort_squares():
-    pass
+    for fn in glob('full_snap.png'):
+        img = cv2.imread(fn)
+        squares = find_squares(img)
+        squaresnp = np.array(squares)
+        print(squaresnp.shape)
+        print(squaresnp.strides)
 
 
 #
@@ -108,12 +114,13 @@ def sort_squares():
 #
 # Flag = 22x25
 # 2 = 15x24
-# 
+#
 
 
-'''
-MOUSE Movements + differnt Clicks
-'''
+
+# MOUSE Movements + differnt Clicks
+# TO-DO: retype it with PyAutoGUI
+#
 
 def leftClick():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
@@ -164,7 +171,9 @@ def startGame():
 
 
 def main():
-    square_recognition() # funktioniert aktuell nur mit python2.7
+    img = "full_snap.png"
+    sort_squares()
+    #square_recognition() # funktioniert aktuell nur mit python2.7
     #pass
 
 if __name__ == '__main__':
