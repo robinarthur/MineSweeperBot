@@ -6,7 +6,6 @@ PY3 = sys.version_info[0] == 3
 
 if PY3:
     xrange = range
-    from PIL import ImageOps, ImageGrab
 else:
     pass
     #from Pillow import ImageOps, ImageGrab
@@ -14,6 +13,7 @@ else:
 from glob import glob
 import os
 import time
+#from PIL import ImageOps, ImageGrab #only on windows
 #import win32api, win32con # only on windows
 import numpy as np
 import cv2# funktioniert gerade nur unter python2.7
@@ -91,7 +91,7 @@ def square_recognition():
     for fn in glob('full_snap.png'):
         img = cv2.imread(fn)
         squares = find_squares(img)
-        cv2.drawContours( img, squares, -1, (0, 255, 255), 3 )
+        cv2.drawContours( img, squares, -1, (0, 255, 255), 1 )
         cv2.imshow('squares', img)
         ch = cv2.waitKey()
         if ch == 27:
@@ -107,7 +107,11 @@ def sort_squares():
         print(squaresnp.shape)
         print("squares")
         print(squaresnp)
-
+        print("_________")
+        print(squares[0][0][0])
+        print(squares[0][1][1])
+        print(squares[0][2])
+        print(squares[0][3])
 
 #
 # its a bit difficult, because the game has a 3D effect, thats why the x-value of
