@@ -104,7 +104,7 @@ def sort_squares():
         squares = find_squares(img)
         squaresnp = np.array(squares)
         print("shape")
-        print(squaresnp.shape)
+        print(squares.type)
         print("squares")
         print(squaresnp)
         print("_________")
@@ -112,7 +112,30 @@ def sort_squares():
         print(squares[0][1][1])
         print(squares[0][2])
         print(squares[0][3])
+        # thanks to stamaimer from stackoverflow
+        # https://stackoverflow.com/a/45564147/7477664
 
+        flat_list = [item for row in squares for item in row]
+        flat_list.sort()
+        print("flat_list" % flat_list)
+
+        # If you want to reshape the 1d list with shape(1, 81, 2) to 2d list with shape(9, 9, 2)
+        result = []
+        temp = []
+        count = 0
+
+        for item in flat_list:
+            temp.append(item)
+            count += 1
+            if count % 9 == 0:
+                result.append(temp)
+                temp = []
+                count = 0
+
+        # You also can use numpy to reshape flat_list to (9, 9, 2)
+
+        result = np.array(flat_list).reshape(9, 9, 2)
+        print("result" % result)
 #
 # its a bit difficult, because the game has a 3D effect, thats why the x-value of
 # the flags are a bit lower then the number values. But, you have to click, before
