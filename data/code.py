@@ -17,6 +17,7 @@ import time
 #import win32api, win32con # only on windows
 import numpy as np
 import cv2# funktioniert gerade nur unter python2.7
+import matplotlib.pyplot as plt
 
 
 # --- Globals ---
@@ -103,21 +104,48 @@ def sort_squares():
         img = cv2.imread(fn)
         squares = find_squares(img)
         squaresnp = np.array(squares)
-        print("shape")
-        print(squares.type)
-        print("squares")
-        print(squaresnp)
-        print("_________")
-        print(squares[0][0][0])
-        print(squares[0][1][1])
-        print(squares[0][2])
-        print(squares[0][3])
+#
+        print("squaresnp_shape")
+        print(squaresnp.shape)
+#        print(squares[0])
+#        print(squares[1])
+#        print("squaresnp")
+#        print(squaresnp[0])
+#        print("_________")
+#        print(squares[0][0][0])
+#        print(squares[0][1][1])
+#        print(squares[0][2])
+#        print(squares[0][3])
         # thanks to stamaimer from stackoverflow
         # https://stackoverflow.com/a/45564147/7477664
 
         flat_list = [item for row in squares for item in row]
-        flat_list.sort()
-        print("flat_list" % flat_list)
+        flat_list_np = np.array(flat_list)
+        print("flat_list_shape")
+        print(flat_list_np.shape)
+#        print(flat_list[0])
+#        print(flat_list[1])
+#        print(flat_list[2])
+#        print(flat_list[3])
+#        print(flat_list[4])
+#        print(flat_list[5])
+#           plot of the points to see whats really inside
+        N = 50
+        colors = np.random.rand(N)
+        x, y = flat_list_np.T
+        plt.scatter(x,y)
+        plt.savefig('plot.png')#plt.show()
+
+
+
+
+
+
+
+
+        print("flat_list_sorted" % flat_list)
+        #flat_list.sort()
+
 
         # If you want to reshape the 1d list with shape(1, 81, 2) to 2d list with shape(9, 9, 2)
         result = []
@@ -127,7 +155,7 @@ def sort_squares():
         for item in flat_list:
             temp.append(item)
             count += 1
-            if count % 9 == 0:
+            if count % 4 == 0:
                 result.append(temp)
                 temp = []
                 count = 0
