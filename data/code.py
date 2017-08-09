@@ -104,7 +104,6 @@ def sort_squares():
         img = cv2.imread(fn)
         squares = find_squares(img)
         squaresnp = np.array(squares)
-#
         print("squaresnp_shape")
         print(squaresnp.shape)
 #        print(squares[0])
