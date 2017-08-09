@@ -106,6 +106,8 @@ def sort_squares():
         squaresnp = np.array(squares)
         print("squaresnp_shape")
         print(squaresnp.shape)
+        print("squaresnpnp_ndim")
+        print(squaresnp.ndim)
 #        print(squares[0])
 #        print(squares[1])
 #        print("squaresnp")
@@ -120,8 +122,10 @@ def sort_squares():
 
         flat_list = [item for row in squares for item in row]
         flat_list_np = np.array(flat_list)
-        print("flat_list_shape")
+        print("flat_list_np_shape")
         print(flat_list_np.shape)
+        print("flat_list_np_ndim")
+        print(flat_list_np.ndim)
 #        print(flat_list[0])
 #        print(flat_list[1])
 #        print(flat_list[2])
@@ -131,15 +135,15 @@ def sort_squares():
 #           plot of the points to see whats really inside
         N = 50
         colors = np.random.rand(N)
-        x, y = flat_list_np[0].T
+        x, y = flat_list_np.T
         plt.scatter(x,y,alpha = 0.5)
         #plt.savefig('plot.png')
         plt.show()
 
-
-        print("flat_list_sorted" % flat_list)
-        #flat_list.sort()
-
+        print("flat_list_np")
+        print(flat_list_np)
+        print("flat_list_sorted")
+        flat_list_sorted = flat_list_np.sort()
 
         # If you want to reshape the 1d list with shape(1, 81, 2) to 2d list with shape(9, 9, 2)
         result = []
