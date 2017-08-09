@@ -133,11 +133,11 @@ def sort_squares():
 #        print(flat_list[4])
 #        print(flat_list[5])
 #           plot of the points to see whats really inside
-        N = 50
-        colors = np.random.rand(N)
+
         x, y = flat_list_np.T
         plt.scatter(x,y,alpha = 0.5)
-        #plt.savefig('plot.png')
+        #plt.xticks([]), plt.yticks([])# to hide tick values on X and Y axis
+        plt.savefig('plot.png')
         plt.show()
 
         print("flat_list_np")
@@ -223,13 +223,51 @@ def startGame():
     leftClick()
     time.sleep(.1)
 
+def helper():
+    for fn1 in glob('full_snap.png'):
+        for fn2 in glob('plot.png'):
+# https://pythonprogramming.net/image-arithmetics-logic-python-opencv-tutorial/?completed=/image-operations-python-opencv-tutorial/            
+            # Load two images
+            img1 = cv2.imread(fn1,cv2.IMREAD_GRAYSCALE)
+            img2 = cv2.imread(fn2)
+
+            # I want to put the second img on top-left corner,
+            # So I create a ROI - Region of Image
+            rows, cols, channels = img2.shape
+            roi = img1[0:rows, 0:cols]
+
+            # Now create a mask of img1 and create its inverse mask
+            img2gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+
+            # add a threshold
+            ret, mask = cv2.threshold(img2gray, 220, 255, cv2.TRESH_BINARY_INV)
+
+            mask_inv = cv2.bitwise_not(mask)
+
+            # Now black-out the area of img2 in ROI
+
+
+            plt.imshow(img, cmap = 'gray', interpolation = 'bicubic')
+            plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+            plt.plot([200,300,400],[100,200,300],'c', linewidth=5)
+            plt.show()
+            #cv2.imwrite('watchgray.png',img)
+
+
+
+
+
+
+
+
 
 
 def main():
+    #helper()
     #img = "full_snap.png"
     sort_squares()
     #square_recognition() # funktioniert aktuell nur mit python2.7
     #pass
 
 if __name__ == '__main__':
-    sort_squares()
+    main()
