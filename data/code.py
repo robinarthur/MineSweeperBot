@@ -131,15 +131,10 @@ def sort_squares():
 #           plot of the points to see whats really inside
         N = 50
         colors = np.random.rand(N)
-        x, y = flat_list_np.T
-        plt.scatter(x,y)
-        plt.savefig('plot.png')#plt.show()
-
-
-
-
-
-
+        x, y = flat_list_np[0].T
+        plt.scatter(x,y,alpha = 0.5)
+        #plt.savefig('plot.png')
+        plt.show()
 
 
         print("flat_list_sorted" % flat_list)
@@ -227,10 +222,10 @@ def startGame():
 
 
 def main():
-    img = "full_snap.png"
+    #img = "full_snap.png"
     sort_squares()
     #square_recognition() # funktioniert aktuell nur mit python2.7
     #pass
 
 if __name__ == '__main__':
-    main()
+    sort_squares()
