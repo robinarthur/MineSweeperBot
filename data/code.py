@@ -226,7 +226,7 @@ def startGame():
 def helper():
     for fn1 in glob('full_snap.png'):
         for fn2 in glob('plot.png'):
-# https://pythonprogramming.net/image-arithmetics-logic-python-opencv-tutorial/?completed=/image-operations-python-opencv-tutorial/            
+# https://pythonprogramming.net/image-arithmetics-logic-python-opencv-tutorial/?completed=/image-operations-python-opencv-tutorial/
             # Load two images
             img1 = cv2.imread(fn1,cv2.IMREAD_GRAYSCALE)
             img2 = cv2.imread(fn2)
@@ -245,6 +245,20 @@ def helper():
             mask_inv = cv2.bitwise_not(mask)
 
             # Now black-out the area of img2 in ROI
+            img1_bg = cv2.bitwise_and(roi,roi,mask = mask_inv)
+
+            #take only region of logo from logo image
+            img2_fg = cv2.bitwise_and(img2,img2,mask = mask)
+
+            dat = cv2.add(img1_bg,img2_fg)
+            img1[0:rows, 0:cols] = dst
+
+            cv2.imshow('res', img1)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
+
+
 
 
             plt.imshow(img, cmap = 'gray', interpolation = 'bicubic')
@@ -265,7 +279,8 @@ def helper():
 def main():
     #helper()
     #img = "full_snap.png"
-    sort_squares()
+    helper()
+    #sort_squares()
     #square_recognition() # funktioniert aktuell nur mit python2.7
     #pass
 
