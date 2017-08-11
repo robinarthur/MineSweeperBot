@@ -104,10 +104,12 @@ def sort_squares():
         img = cv2.imread(fn)
         squares = find_squares(img)
         squaresnp = np.array(squares)
-        print("squaresnp_shape")
+        print("squaresnp_shape + type of squares")
         print(squaresnp.shape)
-        print("squaresnpnp_ndim")
+        print(type(squares))
+        print("squaresnpnp_ndim + typeof squaresnp")
         print(squaresnp.ndim)
+        print(type(squaresnp))
 #        print(squares[0])
 #        print(squares[1])
 #        print("squaresnp")
@@ -257,16 +259,41 @@ def helper():
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
-
-
-
-
             plt.imshow(img, cmap = 'gray', interpolation = 'bicubic')
             plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
             plt.plot([200,300,400],[100,200,300],'c', linewidth=5)
             plt.show()
             #cv2.imwrite('watchgray.png',img)
 
+def isDark():
+    # check if the pixel is a dark pixel -> maybe background or border linewidth
+    # a java example taken from:
+    #   http://luckytoilet.wordpress.com/2012/12/23/2125/
+    #
+    #  static boolean isDark(int rgb){
+    #    int red = (rgb >> 16) & 0xFF;
+    #    int green = (rgb >> 8) & 0xFF;
+    #    int blue = rgb & 0xFF;
+    #    return red + green + blue < 120;
+    #  }
+
+
+def getRGB(img):
+    # get the RGB Values of each Pixel and store it in a numpy Array
+    RGB = np.array(img.getcolors())
+    return RGB
+
+
+
+
+#
+# look into the opencv examples!
+# def digits():
+#
+# def digits_adjust():
+#
+# def digits_video():
+#
 
 
 
@@ -279,8 +306,8 @@ def helper():
 def main():
     #helper()
     #img = "full_snap.png"
-    helper()
-    #sort_squares()
+    #helper()
+    sort_squares()
     #square_recognition() # funktioniert aktuell nur mit python2.7
     #pass
 
