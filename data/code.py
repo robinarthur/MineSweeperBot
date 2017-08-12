@@ -99,10 +99,41 @@ def square_recognition():
             break
     cv2.destroyAllWindows()
 
+# Bubble Sorting algorithm
+def sort(List):
+    for i in range(len(List)):
+        for j in range(len(List) - 1, i, -1):
+            if List[j] < List[j - 1]:
+                List[j], List[j - 1] = List[j - 1], List[j]
+    return List
+
 def sort_squares():
     for fn in glob('full_snap.png'):
         img = cv2.imread(fn)
-        squares = find_squares(img)
+        squares = find_squares(img) # get a list of many numpy arrays with points in it
+
+        flat_list = [item for row in squares for item in row]
+
+        point_list = []
+        count = 0
+        for point in flat_list:
+            for point2
+            print(point[0])
+            print(point[1])
+            x = point[0]
+            y = point[1]
+            one_point = [x,y]
+            point_list = point_list.append(one_point)
+
+        print("point_list")
+        print(point_list)
+        break
+
+
+
+
+
+
         squaresnp = np.array(squares)
         print("squaresnp_shape + type of squares")
         print(squaresnp.shape)
@@ -110,18 +141,24 @@ def sort_squares():
         print("squaresnpnp_ndim + typeof squaresnp")
         print(squaresnp.ndim)
         print(type(squaresnp))
-#        print(squares[0])
-#        print(squares[1])
-#        print("squaresnp")
-#        print(squaresnp[0])
-#        print("_________")
-#        print(squares[0][0][0])
-#        print(squares[0][1][1])
-#        print(squares[0][2])
-#        print(squares[0][3])
+        print(squares[0])
+        print(type(squares[0]))
+        print(squares[1])
+        print("squaresnp")
+        print(squaresnp[0])
+#       print("_________")
+        print(squares[0][0][0])
+        print(type(squares[0][0]))
+        print(squares[0][1][1])
+        print(type(squares[0][1][1]))
+        print(squares[0][2])
+        print(squares[0][3])
+        a = sorted(squares, key=lambda x:len(x))
+        print(a)
         # thanks to stamaimer from stackoverflow
         # https://stackoverflow.com/a/45564147/7477664
-
+        #sorted_list = sort(squares)
+        #print(sorted_list)
         flat_list = [item for row in squares for item in row]
         flat_list_np = np.array(flat_list)
         print("flat_list_np_shape")
@@ -276,10 +313,10 @@ def isDark():
     #    int blue = rgb & 0xFF;
     #    return red + green + blue < 120;
     #  }
+    return None
 
-
-def getRGB(img):
     # get the RGB Values of each Pixel and store it in a numpy Array
+def getRGB(img):
     RGB = np.array(img.getcolors())
     return RGB
 
