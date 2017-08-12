@@ -8,16 +8,17 @@ if PY3:
     xrange = range
 else:
     pass
-    #from Pillow import ImageOps, ImageGrab
+
 
 from glob import glob
 import os
 import time
-#from PIL import ImageOps, ImageGrab #only on windows
-#import win32api, win32con # only on windows
+from PIL import ImageOps, ImageGrab
+import win32api, win32con
 import numpy as np
-import cv2# funktioniert gerade nur unter python2.7
+import cv2
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 # --- Globals ---
@@ -114,19 +115,32 @@ def sort_squares():
 
         flat_list = [item for row in squares for item in row]
 
-        point_list = []
-        count = 0
-        for point in flat_list:
-            for point2
-            print(point[0])
-            print(point[1])
-            x = point[0]
-            y = point[1]
-            one_point = [x,y]
-            point_list = point_list.append(one_point)
+        corners_list = []
 
-        print("point_list")
-        print(point_list)
+        for corner in flat_list:
+            corners_list.append(corner)
+
+        df = pd.DataFrame([], columns=list('xy'))
+        for point in corners_list:
+            x = int(point[0])
+            print(x)
+            y = int(point[1])
+            print(y)
+            df2 = pd.DataFrame([x, y], columns=list('xy'))
+            df = df.apply(df2, axis = 0, ignore_index=True)
+
+
+        print("df")
+        print(df)
+#            print(point[0])
+#            print(point[1])
+#            x = point[0]
+#            y = point[1]
+#            one_point = [x,y]
+#            point_list = point_list.append(one_point)
+
+#        print("point_list")
+#        print(point_list)
         break
 
 
