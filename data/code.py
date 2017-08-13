@@ -360,7 +360,6 @@ def read_pic():
 
         image_area = gray.size # this is the area of the image_area
 
-
         print("img'{0}'".format(img))
         print("gray'{0}'".format(gray))
         print("tresh'{0}'".format(tresh))
