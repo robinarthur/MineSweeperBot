@@ -120,13 +120,13 @@ def sort_squares():
         for corner in flat_list:
             corners_list.append(corner)
 
-        df = pd.DataFrame([], columns=list('xy'))
+        df = pd.DataFrame([], columns=list('X','Y'))
         for point in corners_list:
             x = int(point[0])
             print(x)
             y = int(point[1])
             print(y)
-            df2 = pd.DataFrame([x, y], columns=list('xy'))
+            df2 = pd.DataFrame([x, y], columns=list('X', 'Y'))
             df = df.apply(df2, axis = 0, ignore_index=True)
 
 
@@ -348,6 +348,25 @@ def getRGB(img):
 
 
 
+def read_pic():
+    # powered by:
+    # https://github.com/robinarthur/OpenCV2-Python/blob/master/OpenCV_Python_Blog/sudoku_v_0.0.6/sudoku.py
+    for fn in glob('full_snap.png'):
+        img = cv2.imread(fn)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        tresh = cv2.adaptiveThreshold(gray, 255,1,1,5,2)
+        #contours, hierarchy = cv2.findContours(tresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+        image_area = gray.size # this is the area of the image_area
+
+
+        print("img'{0}'".format(img))
+        print("gray'{0}'".format(gray))
+        print("tresh'{0}'".format(tresh))
+        print("image_area'{0}'".format(image_area))
+
+        for i in contours:
 
 
 
@@ -358,9 +377,10 @@ def main():
     #helper()
     #img = "full_snap.png"
     #helper()
-    sort_squares()
+    #sort_squares()
     #square_recognition() # funktioniert aktuell nur mit python2.7
     #pass
+    read_pic()
 
 if __name__ == '__main__':
     main()
