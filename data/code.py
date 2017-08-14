@@ -346,26 +346,39 @@ def getRGB(img):
 # def digits_video():
 #
 
-
-
 def read_pic():
     # powered by:
     # https://github.com/robinarthur/OpenCV2-Python/blob/master/OpenCV_Python_Blog/sudoku_v_0.0.6/sudoku.py
     for fn in glob('full_snap.png'):
         img = cv2.imread(fn)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        print("gray1'{0}'".format(gray))
+        gray = cv2.bilateralFilter(gray, 11, 17, 17)
+        print("gray2'{0}'".format(gray))
 
         tresh = cv2.adaptiveThreshold(gray, 255,1,1,5,2)
-        #contours, hierarchy = cv2.findContours(tresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours, hierarchy = cv2.findContours(tresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
         image_area = gray.size # this is the area of the image_area
 
+        # the following print statements are for Debugging only
         print("img'{0}'".format(img))
         print("gray'{0}'".format(gray))
         print("tresh'{0}'".format(tresh))
         print("image_area'{0}'".format(image_area))
 
         for i in contours:
+            if cv2.contourArea(i)> image_area/2:
+                # if area of box > half of image,
+                # it is possibly the biggest blob
+                peri = cv2.arcLength(i, True)
+                approx = cv2.approxPolyDP(i, 0.02*peri, True)
+                # cv2.drawContours(img,[approx],0,(0,255,0),2,cv2.CV_AA)
+                break
+
+        # the following print statements are for Debugging only
+        print("peri'{0}'".format(peri))
+        print("approx'{0}'".format(approx))
 
 
 
