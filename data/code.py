@@ -349,7 +349,7 @@ def getRGB(img):
 def read_pic():
     # powered by:
     # https://github.com/robinarthur/OpenCV2-Python/blob/master/OpenCV_Python_Blog/sudoku_v_0.0.6/sudoku.py
-    for fn in glob('full_snap.png'):
+    for fn in glob('sudoku.jpg'):
         img = cv2.imread(fn)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         print("gray1'{0}'".format(gray))
