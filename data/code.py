@@ -311,7 +311,7 @@ def getRGB(img):
 
 
 
-def canny():
+def gradient():
         # taken from:
         # https://pythonprogramming.net/canny-edge-detection-gradients-python-opencv-tutorial/
         for fn in glob('full_snap.png'):
@@ -328,16 +328,42 @@ def canny():
             sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=5)
             sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=5)
 
-            cv2.imshow('Original', img)
-            cv2.imshow('Mask', mask)
+            #cv2.imshow('Original', img)
+            #cv2.imshow('Mask', mask)
             cv2.imshow('laplacian', laplacian)
-            cv2.imshow('sobelx', sobelx)
-            cv2.imshow('sobely', sobely)
+            #cv2.imshow('sobelx', sobelx)
+            #cv2.imshow('sobely', sobely)
 
             cv2.waitKey()
 
         cv2.destroyAllWindows
 
+def canny_edge():
+        # taken from:
+        # https://pythonprogramming.net/canny-edge-detection-gradients-python-opencv-tutorial/
+        for fn in glob('full_snap.png'):
+            img = cv2.imread(fn)
+            while(1):
+                hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+                lower_red = np.array([30,150,50])
+                upper_red = np.array([255,255,180])
+
+                mask = cv2.inRange(hsv, lower_red, upper_red)
+                res = cv2.bitwise_and(img, img, mask= mask)
+
+                laplacian = cv2.Laplacian(img, cv2.CV_64F)
+                edges = cv2.Canny(img,100,200)
+
+                cv2.imshow('Original', img)
+                cv2.imshow('Edges', edges)
+                cv2.imshow('Laplacian', laplacian)
+
+
+                k = cv2.waitKey(5) & 0xFF
+                if k == 27:
+                    break
+            cv2.destroyAllWindows()
 
 def main():
     #helper()
@@ -348,7 +374,8 @@ def main():
     #pass
     #read_pic()
     #corner_detection()
-    canny()
+    #gradient()
+    canny_edge()
 
 if __name__ == '__main__':
     main()
