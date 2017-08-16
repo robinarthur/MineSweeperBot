@@ -295,7 +295,10 @@ def getRGB(img):
     RGB = np.array(img.getcolors())
     return RGB
 
-
+#TODO
+#
+# put the different recognitions together
+# ask on stackoverflow for the best "clickable" solution
 #
 # look into the opencv examples!
 # def digits():
