@@ -9,7 +9,6 @@ if PY3:
 else:
     pass
 
-
 from glob import glob
 import os
 import time
@@ -297,8 +296,6 @@ def getRGB(img):
     return RGB
 
 
-
-
 #
 # look into the opencv examples!
 # def digits():
@@ -331,6 +328,11 @@ def canny_edge():
                 cv2.imshow('Original', img)
                 cv2.imshow('Edges', edges)
                 cv2.imshow('Laplacian', laplacian)
+
+                # just for debugging:
+                print("Original'{0}'".format(img))
+                print("edges'{0}'".format(edges))
+                print("laplacian'{0}'".format(laplacian))
 
 
                 k = cv2.waitKey(5) & 0xFF
