@@ -298,6 +298,7 @@ def getRGB(img):
 #TODO
 #
 # put the different recognitions together
+# (sort_squares + canny_edge)
 # ask on stackoverflow for the best "clickable" solution
 #
 # look into the opencv examples!
