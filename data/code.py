@@ -276,6 +276,137 @@ def startGame():
     leftClick()
     time.sleep(.1)
 
+
+
+def isDark():
+    # check if the pixel is a dark pixel -> maybe background or border linewidth
+    # a java example taken from:
+    #   http://luckytoilet.wordpress.com/2012/12/23/2125/
+    #
+    #  static boolean isDark(int rgb){
+    #    int red = (rgb >> 16) & 0xFF;
+    #    int green = (rgb >> 8) & 0xFF;
+    #    int blue = rgb & 0xFF;
+    #    return red + green + blue < 120;
+    #  }
+    return None
+
+    # get the RGB Values of each Pixel and store it in a numpy Array
+def getRGB(img):
+    RGB = np.array(img.getcolors())
+    return RGB
+
+
+
+
+#
+# look into the opencv examples!
+# def digits():
+#
+# def digits_adjust():
+#
+# def digits_video():
+#
+
+
+
+
+def canny():
+        # taken from:
+        # https://pythonprogramming.net/canny-edge-detection-gradients-python-opencv-tutorial/
+        for fn in glob('full_snap.png'):
+            img = cv2.imread(fn)
+            hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+            lower_red = np.array([30,150,50])
+            upper_red = np.array([255,255,180])
+
+            mask = cv2.inRange(hsv, lower_red, upper_red)
+            res = cv2.bitwise_and(img, img, mask= mask)
+
+            laplacian = cv2.Laplacian(img, cv2.CV_64F)
+            sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=5)
+            sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=5)
+
+            cv2.imshow('Original', img)
+            cv2.imshow('Mask', mask)
+            cv2.imshow('laplacian', laplacian)
+            cv2.imshow('sobelx', sobelx)
+            cv2.imshow('sobely', sobely)
+
+            cv2.waitKey()
+
+        cv2.destroyAllWindows
+
+
+def main():
+    #helper()
+    #img = "full_snap.png"
+    #helper()
+    #sort_squares()
+    #square_recognition() # funktioniert aktuell nur mit python2.7
+    #pass
+    #read_pic()
+    #corner_detection()
+    canny()
+
+if __name__ == '__main__':
+    main()
+
+
+####### doesnt work, but its too early to remove it ###
+def read_pic():
+    # powered by:
+    # https://github.com/robinarthur/OpenCV2-Python/blob/master/OpenCV_Python_Blog/sudoku_v_0.0.6/sudoku.py
+    for fn in glob('sudoku.jpg'):
+        img = cv2.imread(fn)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        print("gray1'{0}'".format(gray))
+        gray = cv2.bilateralFilter(gray, 11, 17, 17)
+        print("gray2'{0}'".format(gray))
+
+        tresh = cv2.adaptiveThreshold(gray, 255,1,1,5,2)
+        contours, hierarchy = cv2.findContours(tresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+        image_area = gray.size # this is the area of the image_area
+
+        # the following print statements are for Debugging only
+        print("img'{0}'".format(img))
+        print("gray'{0}'".format(gray))
+        print("tresh'{0}'".format(tresh))
+        print("image_area'{0}'".format(image_area))
+
+        for i in contours:
+            if cv2.contourArea(i)> image_area/2:
+                # if area of box > half of image,
+                # it is possibly the biggest blob
+                peri = cv2.arcLength(i, True)
+                approx = cv2.approxPolyDP(i, 0.02*peri, True)
+                # cv2.drawContours(img,[approx],0,(0,255,0),2,cv2.CV_AA)
+                break
+
+        # the following print statements are for Debugging only
+        print("peri'{0}'".format(peri))
+        print("approx'{0}'".format(approx))
+
+def corner_detection():
+    # taken from:
+    # https://pythonprogramming.net/corner-detection-python-opencv-tutorial/
+    for fn in glob('full_snap.png'):
+        img = cv2.imread(fn)
+        grayimg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray = np.float32(grayimg)
+
+        corners = cv2.goodFeaturesToTrack(gray, 40, 0.01, 400)
+        corners = np.int0(corners)
+
+        for corner in corners:
+            x,y = corner.ravel()
+            cv2.circle(grayimg, (x,y), 3, 255, -1)
+
+        cv2.imshow('Corner', grayimg)
+        cv2.waitKey() # this line doesn't appear in the source
+
 def helper():
     for fn1 in glob('full_snap.png'):
         for fn2 in glob('plot.png'):
@@ -315,84 +446,3 @@ def helper():
             plt.plot([200,300,400],[100,200,300],'c', linewidth=5)
             plt.show()
             #cv2.imwrite('watchgray.png',img)
-
-def isDark():
-    # check if the pixel is a dark pixel -> maybe background or border linewidth
-    # a java example taken from:
-    #   http://luckytoilet.wordpress.com/2012/12/23/2125/
-    #
-    #  static boolean isDark(int rgb){
-    #    int red = (rgb >> 16) & 0xFF;
-    #    int green = (rgb >> 8) & 0xFF;
-    #    int blue = rgb & 0xFF;
-    #    return red + green + blue < 120;
-    #  }
-    return None
-
-    # get the RGB Values of each Pixel and store it in a numpy Array
-def getRGB(img):
-    RGB = np.array(img.getcolors())
-    return RGB
-
-
-
-
-#
-# look into the opencv examples!
-# def digits():
-#
-# def digits_adjust():
-#
-# def digits_video():
-#
-
-def read_pic():
-    # powered by:
-    # https://github.com/robinarthur/OpenCV2-Python/blob/master/OpenCV_Python_Blog/sudoku_v_0.0.6/sudoku.py
-    for fn in glob('sudoku.jpg'):
-        img = cv2.imread(fn)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        print("gray1'{0}'".format(gray))
-        gray = cv2.bilateralFilter(gray, 11, 17, 17)
-        print("gray2'{0}'".format(gray))
-
-        tresh = cv2.adaptiveThreshold(gray, 255,1,1,5,2)
-        contours, hierarchy = cv2.findContours(tresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
-        image_area = gray.size # this is the area of the image_area
-
-        # the following print statements are for Debugging only
-        print("img'{0}'".format(img))
-        print("gray'{0}'".format(gray))
-        print("tresh'{0}'".format(tresh))
-        print("image_area'{0}'".format(image_area))
-
-        for i in contours:
-            if cv2.contourArea(i)> image_area/2:
-                # if area of box > half of image,
-                # it is possibly the biggest blob
-                peri = cv2.arcLength(i, True)
-                approx = cv2.approxPolyDP(i, 0.02*peri, True)
-                # cv2.drawContours(img,[approx],0,(0,255,0),2,cv2.CV_AA)
-                break
-
-        # the following print statements are for Debugging only
-        print("peri'{0}'".format(peri))
-        print("approx'{0}'".format(approx))
-
-
-
-
-
-
-def main():
-    #helper()
-    #img = "full_snap.png"
-    #helper()
-    #sort_squares()
-    #square_recognition() # funktioniert aktuell nur mit python2.7
-    #pass
-    read_pic()
-
-if __name__ == '__main__':
-    main()
