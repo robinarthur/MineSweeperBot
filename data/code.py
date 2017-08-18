@@ -241,6 +241,52 @@ def startGame():
     leftClick()
     time.sleep(.1)
 
+def click_field(move_x, move_y):
+    """Click one grid by given position."""
+    field_status = info.map[move_x, move_y]
+
+    # can only click blank region
+    """ WARNING!!! The following made no sense for the bot """
+    if field_status == 11:
+        if self.mine_map[move_y, move_x] == 1:
+            self.info_map[move_y, move_x] = 12
+        else:
+            # discover the region.
+            self.discover_region(move_x, move_y)
+
+def discover_region(move_x, move_y):
+    """Discover region from given location."""
+    field_list = deque([move_x, move_y])
+
+    while len(field_list) != 0:
+        field = field_list.popleft()
+
+        (tl_idx, br_idx, region_sum) = get_region(field[1], field[0])
+        if region_sum == 0:
+            info_map[field[0], field[1]] = region_sum
+            # get surrounding to queue
+            region_mat = info_map[tl_idx[0]:br_idx[0]+1,
+                                  tl_idx[1]:br_idx[1]+1]
+            x_list, y_list = np.nonzero(region_mat == 11)
+
+            for x_idx, y_idx in zip(x_list, y_list):
+                field_temp = (x_idx + max(field[0]-1, 0),
+                              y_idx + max(field[1]-1, 0))
+                if field_temp not in field_list:
+                    field_list.append(field_temp)
+        elif region_sum > 0:
+            info_map[field[0], field[1]] = region_sum
+
+def get_region(move_x, move_y):
+    """Get region around a location."""
+    top_left = (max(move_x-1, 0), max(move_y-1, 0))
+    bottom_right = (min(move_y+1, board_height-1),
+                    min(move_x+1, board_width-1))
+    region_sum = mine_map[top_left[0]:bottom_right[0]+1,
+                          top_left[1]:bottom_right[1]+1].sum()
+
+    return top_left, bottom_right, region_sum
+
 
 
 def isDark():
@@ -376,6 +422,20 @@ def clone_game(board_width, board_height):
 
     print("mine_map'{0}'".format(mine_map))
     print("info_map'{0}'".format(info_map))
+
+
+
+def check_board(self):
+    """Check the board status and give feedback."""
+    num_mines = np.sum(info_map == 12)
+    num_undiscovered = np.sum(info_map == 11)
+    num_questioned = np.sum(info_map == 10)
+    if num_mines > 0:
+        return 0
+    elif np.array_equal(info_map == 9, mine_map):
+        return 1
+    elif num_undiscovered > 0 or num_questioned > 0:
+        return 2
 
 
 
