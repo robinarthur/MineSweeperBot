@@ -346,6 +346,40 @@ def square_recognition():
             break
     cv2.destroyAllWindows()
 
+def clone_game(board_width, board_height):
+    """this function clones the game and puts the information in it,
+    wich already known.
+
+    Parameters:
+    -----------
+
+    board_height : int
+    board_width : int
+    mine_map : numpy.ndarray
+        the map that defines the minearea
+        0 is empty
+        1 is mine
+    info_map : numpy.ndarray
+        the map that presents to the gamer from the Game
+        0-8 is number of mines in sorrounding.
+        9 is flagged field.
+        10 is questioned field.
+        11 is undiscovered field.
+        12 is a mine field
+    """
+
+    mine_map = np.zeros((board_height, board_width),
+                        dtype = np.uint8)
+
+    info_map = np.ones((board_height, board_width),
+                       dtype = np.uint8)*11
+
+    print("mine_map'{0}'".format(mine_map))
+    print("info_map'{0}'".format(info_map))
+
+
+
+
 def main():
     #helper()
     #img = "full_snap.png"
@@ -356,7 +390,8 @@ def main():
     #read_pic()
     #corner_detection()
     #gradient()
-    canny_edge()
+    #canny_edge()
+    clone_game(9,9)
 
 if __name__ == '__main__':
     main()

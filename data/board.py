@@ -1,7 +1,8 @@
-"""Class that defines the board for the Mine Sweeper both
+"""Class that defines the board for the Mine Sweeper bot
 
 Author: Original - Yuhuang Hu
 Email : duguyue100gmail.com
+https://github.com/duguyue100/minesweeper
 
 Editor : Christian Kraft
 """
@@ -180,3 +181,6 @@ class MSBoard(object):
             board_str += temp_line.expandtabs(4)+"\n"
 
         return board_str
+
+    if __name__ == '__main__':
+        init_board(self)
