@@ -1,5 +1,28 @@
-#!/usr/bin/python2.7
+"""This is the main code for my Mine Sweeper bot, that playing Mine Sweeper
+from Microsoft on its own. In the end the bot should be able to recognize the
+grid and the diiferent Values of the squares without giving him the exact images.
 
+Actually the bot is far away from working. I try to code everyday some line, but
+i don´t know when this bot will be running.
+
+The bot could be sliced in the following main tasks.
+
+1. Start the Game
+2. Read the Game and recognize whats going on
+   - Loop, because the bot should know what happened after every click
+3. Read different regions to evaluate, where mines are for sure to click NOT on
+   this squares.
+4. Game Logic:
+   - apply the game rules
+   - score the squares to find the bombs
+5. Log every Game to find out how good the bot is
+
+Author: Christian Kraft
+Email : ck@chrkr.de
+https://github.com/robinarthur/minesweeperbot
+
+
+"""
 # Python 2/3 compatibility
 import sys
 PY3 = sys.version_info[0] == 3
@@ -43,12 +66,11 @@ grid_columns = {'easy':9,
                 'hard':16
 }
 
-
-# Es wird als erstes ein Screenshot gemacht
-#
-#
-
 def screenGrab():
+    """this function takes a screenshot and give the image back or save it in
+    the actual directory - In the longrun, this should be rewritten with opencv
+    to decrease the
+    module imports"""
     bl = (x_pad + 1, y_pad + 1, x_pad + 432, y_pad + 356)
     im = ImageGrab.grab()
 
@@ -56,6 +78,10 @@ def screenGrab():
     #return im
 
 def Grab():
+    """this function takes a screenshot, process it to grayscsale, store the RGB
+    Values from every Pixel in a numpy Array and give the sum of every datapoint
+    back - In the longrun, this should be rewritten with opencv to decrease the
+    module imports"""
     box = (x_pad + 1, y_pad + 1, x_pad + 595, y_pad + 654)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = np.array(im.getcolors())
@@ -63,10 +89,8 @@ def Grab():
     print(a)
     return a
 
-
-
-# Bubble Sorting algorithm
 def sort(List):
+    """Bubble sorting algorithm from pygorithm"""
     for i in range(len(List)):
         for j in range(len(List) - 1, i, -1):
             if List[j] < List[j - 1]:
@@ -74,6 +98,9 @@ def sort(List):
     return List
 
 def sort_squares():
+    """Sort the cornervalues, that all detectet grid squares are in a list,
+    beginning with the square with the lowest x and the lowest y upper left
+    corner - This is actually not working"""
     for fn in glob('full_snap.png'):
         img = cv2.imread(fn)
         squares = find_squares(img) # get a list of many numpy arrays with points in it
@@ -107,11 +134,6 @@ def sort_squares():
 #        print("point_list")
 #        print(point_list)
         break
-
-
-
-
-
 
         squaresnp = np.array(squares)
         print("squaresnp_shape + type of squares")
@@ -196,52 +218,76 @@ def sort_squares():
 #
 
 def leftClick():
+    """This function could do a leftClick of the mouse.
+    The TODO is her to retype it in PyAutoGUI"""
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
     time.sleep(.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
     print('left Click')    #completly optional. But nice for debugging purposes.
 
 def rightClick():
+    """This function could do a rightClick of the mouse.
+    The TODO is her to retype it in PyAutoGUI"""
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
     time.sleep(.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
     print('right Click')
 
 def leftDown():
+    """This function could hold the left mouse button. I don´t know if i need
+    this, but i want all the mouse functions in the tool.
+    The TODO is her to retype it in PyAutoGUI"""
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
     time.sleep(.1)
     print('left Down')
 
 def rightDown():
+    """This function could hold the right mouse button. I don´t know if i need
+    this, but i want all the mouse functions in the tool.
+    The TODO is her to retype it in PyAutoGUI"""
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
     time.sleep(.1)
     print('right Down')
 
 def leftUp():
+    """This function could let the left mouse button go. I don´t know if i need
+    this, but i want all the mouse functions in the tool.
+    The TODO is her to retype it in PyAutoGUI"""
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
     time.sleep(.1)
     print('left release')
 
 def rightUp():
+    """This function could let the right mouse button go. I don´t know if i need
+    this, but i want all the mouse functions in the tool.
+    The TODO is her to retype it in PyAutoGUI"""
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
     print('right release')
 
 def mousePos(cord):
+    """This function set the mouse Position to the given coords. The coords
+    depending on the Global x_pad and y_pad Values"""
     win32api.SetCursorPos((x_pad + cord[0], y_pad + cord[1]))
 
 def get_cords():
+    """This function get the actual MousePostion and give the coords back.
+    The coords depending on the Global x_pad and y_pad Values"""
     x,y = win32api.GetCursorPos()
     x = x - x_pad
     y = y - y_pad
     print(x,y)
 
 def startGame():
+    """This function do a click onto the starting field. It clicks actually on
+    the Easy/ Beginner game, which loads a normal 9x9 Gameboard.
+    The next step is to ask the User wich game should be played by bot"""
     #location of the dificulty level easy
     mousePos((103,212))
     leftClick()
     time.sleep(.1)
 
 def click_field(move_x, move_y):
+    """This function is from the Sudoku solver - shown in the credits"""
     """Click one grid by given position."""
     field_status = info.map[move_x, move_y]
 
@@ -255,6 +301,7 @@ def click_field(move_x, move_y):
             self.discover_region(move_x, move_y)
 
 def discover_region(move_x, move_y):
+    """This function is from the Sudoku solver - shown in the credits"""
     """Discover region from given location."""
     field_list = deque([move_x, move_y])
 
@@ -278,6 +325,7 @@ def discover_region(move_x, move_y):
             info_map[field[0], field[1]] = region_sum
 
 def get_region(move_x, move_y):
+    """This function is from the Sudoku solver - shown in the credits"""
     """Get region around a location."""
     top_left = (max(move_x-1, 0), max(move_y-1, 0))
     bottom_right = (min(move_y+1, board_height-1),
@@ -290,6 +338,8 @@ def get_region(move_x, move_y):
 
 
 def isDark():
+    """This function is from the Minesweeper solver (Java) - shown in the
+    credits. I dont know if i use this technique to read/ load the game Board"""
     # check if the pixel is a dark pixel -> maybe background or border linewidth
     # a java example taken from:
     #   http://luckytoilet.wordpress.com/2012/12/23/2125/
@@ -304,6 +354,8 @@ def isDark():
 
     # get the RGB Values of each Pixel and store it in a numpy Array
 def getRGB(img):
+    """This function is from the Minesweeper solver (Java) - shown in the
+    credits. I dont know if i use this technique to read/ load the game Board"""
     RGB = np.array(img.getcolors())
     return RGB
 
@@ -321,46 +373,43 @@ def getRGB(img):
 # def digits_video():
 #
 
-
-
-
 def canny_edge():
-        # taken from:
-        # https://pythonprogramming.net/canny-edge-detection-gradients-python-opencv-tutorial/
-        for fn in glob('full_snap.png'):
-            img = cv2.imread(fn)
-            while(1):
-                hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    """This function is taken from SentDex from one of his fantastic Python
+    tutorials.
+    https://pythonprogramming.net/canny-edge-detection-gradients-python-opencv-tutorial/
+    """
+    for fn in glob('full_snap.png'):
+        img = cv2.imread(fn)
+        while(1):
+            hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+            lower_red = np.array([30,150,50])
+            upper_red = np.array([255,255,180])
+            mask = cv2.inRange(hsv, lower_red, upper_red)
+            res = cv2.bitwise_and(img, img, mask= mask)
+            laplacian = cv2.Laplacian(img, cv2.CV_64F)
+            edges = cv2.Canny(img,100,200)
 
-                lower_red = np.array([30,150,50])
-                upper_red = np.array([255,255,180])
+            cv2.imshow('Original', img)
+            cv2.imshow('Edges', edges)
+            cv2.imshow('Laplacian', laplacian)
 
-                mask = cv2.inRange(hsv, lower_red, upper_red)
-                res = cv2.bitwise_and(img, img, mask= mask)
+            # just for debugging:
+            print("Original'{0}'".format(img))
+            print("edges'{0}'".format(edges))
+            print("laplacian'{0}'".format(laplacian))
 
-                laplacian = cv2.Laplacian(img, cv2.CV_64F)
-                edges = cv2.Canny(img,100,200)
-
-                cv2.imshow('Original', img)
-                cv2.imshow('Edges', edges)
-                cv2.imshow('Laplacian', laplacian)
-
-                # just for debugging:
-                print("Original'{0}'".format(img))
-                print("edges'{0}'".format(edges))
-                print("laplacian'{0}'".format(laplacian))
-
-
-                k = cv2.waitKey(5) & 0xFF
-                if k == 27:
-                    break
-            cv2.destroyAllWindows()
+            k = cv2.waitKey(5) & 0xFF
+            if k == 27:
+                break
+        cv2.destroyAllWindows()
 
 def angle_cos(p0, p1, p2):
+    """This function is taken from the OPENCV Python Examples"""
     d1, d2 = (p0-p1).astype('float'), (p2-p1).astype('float')
     return abs( np.dot(d1, d2) / np.sqrt( np.dot(d1, d1)*np.dot(d2, d2) ) )
 
 def find_squares(img):
+    """This function is taken from the OPENCV Python Examples"""
     img = cv2.GaussianBlur(img, (5, 5), 0)
     squares = []
     for gray in cv2.split(img):
@@ -393,6 +442,7 @@ def square_recognition():
     cv2.destroyAllWindows()
 
 def clone_game(board_width, board_height):
+    """This function is from the Sudoku solver - shown in the credits"""
     """this function clones the game and puts the information in it,
     wich already known.
 
@@ -426,6 +476,7 @@ def clone_game(board_width, board_height):
 
 
 def check_board(self):
+    """This function is from the Sudoku solver - shown in the credits"""
     """Check the board status and give feedback."""
     num_mines = np.sum(info_map == 12)
     num_undiscovered = np.sum(info_map == 11)
@@ -441,6 +492,8 @@ def check_board(self):
 
 
 def main():
+    """Main is actually not really useful, but for testing its here. Don´t know
+    if i need this later."""
     #helper()
     #img = "full_snap.png"
     #helper()
@@ -454,6 +507,8 @@ def main():
     clone_game(9,9)
 
 if __name__ == '__main__':
+    """Main is actually not really useful, but for testing its here. Don´t know
+    if i need this later."""
     main()
 
 
