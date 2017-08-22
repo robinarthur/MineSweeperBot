@@ -34,9 +34,7 @@ else:
 
 from glob import glob
 import os
-import time
 from PIL import ImageOps, ImageGrab
-import win32api, win32con
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -217,65 +215,7 @@ def sort_squares():
 # TO-DO: retype it with PyAutoGUI
 #
 
-def leftClick():
-    """This function could do a leftClick of the mouse.
-    The TODO is her to retype it in PyAutoGUI"""
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-    time.sleep(.1)
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-    print('left Click')    #completly optional. But nice for debugging purposes.
 
-def rightClick():
-    """This function could do a rightClick of the mouse.
-    The TODO is her to retype it in PyAutoGUI"""
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
-    time.sleep(.1)
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
-    print('right Click')
-
-def leftDown():
-    """This function could hold the left mouse button. I don´t know if i need
-    this, but i want all the mouse functions in the tool.
-    The TODO is her to retype it in PyAutoGUI"""
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-    time.sleep(.1)
-    print('left Down')
-
-def rightDown():
-    """This function could hold the right mouse button. I don´t know if i need
-    this, but i want all the mouse functions in the tool.
-    The TODO is her to retype it in PyAutoGUI"""
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
-    time.sleep(.1)
-    print('right Down')
-
-def leftUp():
-    """This function could let the left mouse button go. I don´t know if i need
-    this, but i want all the mouse functions in the tool.
-    The TODO is her to retype it in PyAutoGUI"""
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-    time.sleep(.1)
-    print('left release')
-
-def rightUp():
-    """This function could let the right mouse button go. I don´t know if i need
-    this, but i want all the mouse functions in the tool.
-    The TODO is her to retype it in PyAutoGUI"""
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
-    print('right release')
-
-def mousePos(cord):
-    """This function set the mouse Position to the given coords. The coords
-    depending on the Global x_pad and y_pad Values"""
-    win32api.SetCursorPos((x_pad + cord[0], y_pad + cord[1]))
-
-def get_cords():
-    """This function get the actual MousePostion and give the coords back.
-    The coords depending on the Global x_pad and y_pad Values"""
-    x,y = win32api.GetCursorPos()
-    x = x - x_pad
-    y = y - y_pad
-    print(x,y)
 
 def startGame():
     """This function do a click onto the starting field. It clicks actually on
@@ -487,6 +427,9 @@ def check_board(self):
         return 1
     elif num_undiscovered > 0 or num_questioned > 0:
         return 2
+
+def load_board():
+    """look into tetris ai"""
 
 
 
