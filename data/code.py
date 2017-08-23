@@ -340,12 +340,12 @@ def canny_edge():
             #print("laplacian'{0}'".format(laplacian))
             cv2.imwrite(os.getcwd() + '\\laplace' + str(int(time.time())) +'.png', laplacian)
             return laplacian
-
+            """ dont need that anymore i think
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
                 break
         cv2.destroyAllWindows()
-
+"""
 def angle_cos(p0, p1, p2):
     """This function is taken from the OPENCV Python Examples"""
     d1, d2 = (p0-p1).astype('float'), (p2-p1).astype('float')
@@ -439,14 +439,21 @@ def get_anchor(img):
     upper left square. This pixel is the anchor."""
     for x in img:
         for y in img:
-            if is_yellow() == True:
+            if is_blue() == True:
                 anchor = (x, y)
         pass
 
-
-def is_yellow():
-    """this function checks if the pixel is a yellow one"""
-    pass
+def get_first_blue_pixel(img):
+    """this function search in an image the first blue pixel and arange the grid
+    afterwards. Needs an image and the grid integers... height und width
+    """
+    
+def is_blue(img):
+    """this function checks if the pixel is a blue one und give back a numpy array
+            1 is blue
+            0 is not blue
+    """
+    print("laplacian_img'{0}'".format(img))
 
 def is_clickable(x,y):
     if info_map[x][y] == 11:
@@ -468,6 +475,7 @@ def main():
     #corner_detection()
     #gradient()
     laplacian = canny_edge()
+    is_blue(laplacian)
     get_anchor(laplacian)
     #clone_game(9,9)
 
