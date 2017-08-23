@@ -448,6 +448,12 @@ def is_yellow():
     """this function checks if the pixel is a yellow one"""
     pass
 
+def is_clickable(x,y):
+    if info_map[x][y] == 11:
+        return True
+    else:
+        return False
+
 
 def main():
     """Main is actually not really useful, but for testing its here. Dont know
