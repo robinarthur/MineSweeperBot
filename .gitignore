@@ -10,3 +10,4 @@ __pycache__
 opencv
 opencv_contrib
 .python_history
+*.png

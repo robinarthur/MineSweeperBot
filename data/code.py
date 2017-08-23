@@ -3,7 +3,7 @@ from Microsoft on its own. In the end the bot should be able to recognize the
 grid and the diiferent Values of the squares without giving him the exact images.
 
 Actually the bot is far away from working. I try to code everyday some line, but
-i don´t know when this bot will be running.
+i dont know when this bot will be running.
 
 The bot could be sliced in the following main tasks.
 
@@ -39,6 +39,8 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import pandas as pd
+import mahotas
+import time
 
 
 # --- Globals ---
@@ -329,14 +331,15 @@ def canny_edge():
             laplacian = cv2.Laplacian(img, cv2.CV_64F)
             edges = cv2.Canny(img,100,200)
 
-            cv2.imshow('Original', img)
-            cv2.imshow('Edges', edges)
-            cv2.imshow('Laplacian', laplacian)
-
             # just for debugging:
-            print("Original'{0}'".format(img))
-            print("edges'{0}'".format(edges))
-            print("laplacian'{0}'".format(laplacian))
+            #cv2.imshow('Original', img)
+            #cv2.imshow('Edges', edges)
+            #cv2.imshow('Laplacian', laplacian)
+            #print("Original'{0}'".format(img))
+            #print("edges'{0}'".format(edges))
+            #print("laplacian'{0}'".format(laplacian))
+            cv2.imwrite(os.getcwd() + '\\laplace' + str(int(time.time())) +'.png', laplacian)
+            return laplacian
 
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
@@ -431,11 +434,23 @@ def check_board(self):
 def load_board():
     """look into tetris ai"""
 
+def get_anchor(img):
+    """this function search for the first yellow pixel. This should be the the
+    upper left square. This pixel is the anchor."""
+    for x in img:
+        for y in img:
+            if is_yellow() == True:
+                anchor = (x, y)
+        pass
 
+
+def is_yellow():
+    """this function checks if the pixel is a yellow one"""
+    pass
 
 
 def main():
-    """Main is actually not really useful, but for testing its here. Don´t know
+    """Main is actually not really useful, but for testing its here. Dont know
     if i need this later."""
     #helper()
     #img = "full_snap.png"
@@ -446,11 +461,12 @@ def main():
     #read_pic()
     #corner_detection()
     #gradient()
-    #canny_edge()
-    clone_game(9,9)
+    laplacian = canny_edge()
+    get_anchor(laplacian)
+    #clone_game(9,9)
 
 if __name__ == '__main__':
-    """Main is actually not really useful, but for testing its here. Don´t know
+    """Main is actually not really useful, but for testing its here. Dont know
     if i need this later."""
     main()
 
