@@ -447,12 +447,16 @@ def get_first_blue_pixel(img):
     """this function search in an image the first blue pixel and arange the grid
     afterwards. Needs an image and the grid integers... height und width
     """
-    
+
 def is_blue(img):
     """this function checks if the pixel is a blue one und give back a numpy array
             1 is blue
             0 is not blue
     """
+
+    lower_blue = np.array([25, 50, 50])
+    upper_blue = np.array([32, 255, 255])
+    
     print("laplacian_img'{0}'".format(img))
 
 def is_clickable(x,y):
