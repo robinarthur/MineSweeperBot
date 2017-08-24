@@ -331,21 +331,11 @@ def canny_edge():
             laplacian = cv2.Laplacian(img, cv2.CV_64F)
             edges = cv2.Canny(img,100,200)
 
-            # just for debugging:
-            #cv2.imshow('Original', img)
-            #cv2.imshow('Edges', edges)
-            #cv2.imshow('Laplacian', laplacian)
-            #print("Original'{0}'".format(img))
-            #print("edges'{0}'".format(edges))
-            #print("laplacian'{0}'".format(laplacian))
-            cv2.imwrite(os.getcwd() + '\\laplace' + str(int(time.time())) +'.png', laplacian)
+            cv2.imwrite(os.getcwd() + '\\laplace.png', laplacian)
+            #for debugging and tests
+            #cv2.imwrite(os.getcwd() + '\\laplace' + str(int(time.time())) +'.png', laplacian)
             return laplacian
-            """ dont need that anymore i think
-            k = cv2.waitKey(5) & 0xFF
-            if k == 27:
-                break
-        cv2.destroyAllWindows()
-"""
+
 def angle_cos(p0, p1, p2):
     """This function is taken from the OPENCV Python Examples"""
     d1, d2 = (p0-p1).astype('float'), (p2-p1).astype('float')
@@ -434,19 +424,31 @@ def check_board(self):
 def load_board():
     """look into tetris ai"""
 
-def get_anchor(img):
-    """this function search for the first yellow pixel. This should be the the
-    upper left square. This pixel is the anchor."""
-    for x in img:
-        for y in img:
-            if is_blue() == True:
-                anchor = (x, y)
-        pass
 
-def get_first_blue_pixel(img):
-    """this function search in an image the first blue pixel and arange the grid
-    afterwards. Needs an image and the grid integers... height und width
+def get_anchor():
+    """this function search in an image the first blue pixel. This should be the
+    the upper left corner of the upper left square. The grid would be aranged
+    the afterwards.
+
+    Needs:
+    - image
+    - grid_rows
+    - grid_columns
+
+
+    the first pixel should have the first hsv value between 200 and 220
+    because opencv only uses the range between 0 and 120 the function have to
+    look for values betwwen 220/2 and 200/2
+    https://stackoverflow.com/questions/17878254/opencv-python-cant-detect-blue-objects
+
     """
+
+    for fn in glob('laplace.png'):
+        img = cv2.imread(fn)
+        print("img'{0}'".format(img))
+        for x in img:
+            for y in img:
+                pass
 
 def is_blue(img):
     """this function checks if the pixel is a blue one und give back a numpy array
@@ -456,7 +458,7 @@ def is_blue(img):
 
     lower_blue = np.array([25, 50, 50])
     upper_blue = np.array([32, 255, 255])
-    
+
     print("laplacian_img'{0}'".format(img))
 
 def is_clickable(x,y):
@@ -479,8 +481,7 @@ def main():
     #corner_detection()
     #gradient()
     laplacian = canny_edge()
-    is_blue(laplacian)
-    get_anchor(laplacian)
+    get_anchor()
     #clone_game(9,9)
 
 if __name__ == '__main__':
