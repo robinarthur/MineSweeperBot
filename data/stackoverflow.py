@@ -1,6 +1,7 @@
 """this is the next approach with the help of stackoverflow
 https://stackoverflow.com/questions/45860131/opencv-python-how-can-i-get-the-coordinates-of-detected-areas-after-image-proc
 1. treshold the blue
+http://www.geeksforgeeks.org/detection-specific-colorblue-using-opencv-python/
 2. found contour in the range of blue
 3. found thier centers
 4. They were all separated by some 55-57 pixels (both x,y coordinates). Rest is simple.
