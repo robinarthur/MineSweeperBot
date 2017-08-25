@@ -112,18 +112,18 @@ def sort_squares():
         for corner in flat_list:
             corners_list.append(corner)
 
-        df = pd.DataFrame([], columns=list('X','Y'))
-        for point in corners_list:
-            x = int(point[0])
-            print(x)
-            y = int(point[1])
-            print(y)
-            df2 = pd.DataFrame([x, y], columns=list('X', 'Y'))
-            df = df.apply(df2, axis = 0, ignore_index=True)
+    #    df = pd.DataFrame([], columns=list('X','Y'))
+#        for point in corners_list:
+#            x = int(point[0])
+#            print(x)
+#            y = int(point[1])
+#            print(y)
+    #        df2 = pd.DataFrame([x, y], columns=list('X', 'Y'))
+    #        df = df.apply(df2, axis = 0, ignore_index=True)
 
 
-        print("df")
-        print(df)
+#        print("df")
+#        print(df)
 #            print(point[0])
 #            print(point[1])
 #            x = point[0]
@@ -133,7 +133,7 @@ def sort_squares():
 
 #        print("point_list")
 #        print(point_list)
-        break
+#        break
 
         squaresnp = np.array(squares)
         print("squaresnp_shape + type of squares")
@@ -327,9 +327,9 @@ def canny_edge():
             lower_red = np.array([30,150,50])
             upper_red = np.array([255,255,180])
             mask = cv2.inRange(hsv, lower_red, upper_red)
-            res = cv2.bitwise_and(img, img, mask= mask)
+            #res = cv2.bitwise_and(img, img, mask= mask)
             laplacian = cv2.Laplacian(img, cv2.CV_64F)
-            edges = cv2.Canny(img,100,200)
+            #edges = cv2.Canny(img,100,200)
 
             cv2.imwrite(os.getcwd() + '\\laplace.png', laplacian)
             #for debugging and tests
@@ -457,7 +457,9 @@ def is_blue(img):
     """
 
     lower_blue = np.array([25, 50, 50])
+    lower_blue2 = np.array([100, 150, 0], np.uint8)
     upper_blue = np.array([32, 255, 255])
+    upper_blue2 = np.array([140, 255, 255], np.uint8)
 
     print("laplacian_img'{0}'".format(img))
 
@@ -474,8 +476,8 @@ def main():
     #helper()
     #img = "full_snap.png"
     #helper()
-    #sort_squares()
-    #square_recognition() # funktioniert aktuell nur mit python2.7
+    sort_squares()
+    square_recognition() # funktioniert aktuell nur mit python2.7
     #pass
     #read_pic()
     #corner_detection()

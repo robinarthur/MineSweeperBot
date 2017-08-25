@@ -30,6 +30,12 @@ Email : ck@chrkr.de
 https://github.com/robinarthur/minesweeperbot
 
 
+# Dependencies
+- opencv
+- cv.blob - https://github.com/spmallick/learnopencv/tree/master/BlobDetector
+- to be continued
+
+
 # Credits
 without the Help of this Tutorial https://code.tutsplus.com/tutorials/how-to-build-a-python-bot-that-can-play-web-games--active-11117 ,
 i was not able to think about doing something like that.
