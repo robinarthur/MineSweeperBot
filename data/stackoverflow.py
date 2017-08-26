@@ -2,7 +2,8 @@
 https://stackoverflow.com/questions/45860131/opencv-python-how-can-i-get-the-coordinates-of-detected-areas-after-image-proc
 1. treshold the blue - check, maybe improve the blue range
 http://www.geeksforgeeks.org/detection-specific-colorblue-using-opencv-python/
-2. found contour in the range of blue
+2. found contour in the range of blue - contour_img, the contours are in contour
+http://docs.opencv.org/3.2.0/d4/d73/tutorial_py_contours_begin.html
 3. found thier centers
 4. They were all separated by some 55-57 pixels (both x,y coordinates). Rest is simple.
 
@@ -35,6 +36,11 @@ cv2.imshow('img',img)
 cv2.imshow('mask',mask)
 cv2.imshow('res',res)
 
+im2, contours, hierarchy = cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+contour_img = cv2.drawContours(img, contours, -1, (0,255,0), 1)
+
+
+cv2.imshow('contour_img', contour_img)
 # This displays the frame, mask
 # and res which we created in 3 separate windows.
 cv2.waitKey(0)
