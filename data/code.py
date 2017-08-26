@@ -395,6 +395,12 @@ def clone_game(board_width, board_height):
         10 is questioned field.
         11 is undiscovered field.
         12 is a mine field
+    index_map : numpy.ndarray
+        the map that presents an index of the tiles, for better exchange between
+        the coords list.
+    coords_list :
+        list of "len(index_map)" coords, every coord represent the center of the
+        square
     """
 
     mine_map = np.zeros((board_height, board_width),
@@ -403,8 +409,12 @@ def clone_game(board_width, board_height):
     info_map = np.ones((board_height, board_width),
                        dtype = np.uint8)*11
 
+    index_map = np.arange(board_height*board_width).reshape(board_height, board_width)
+
+
     print("mine_map'{0}'".format(mine_map))
     print("info_map'{0}'".format(info_map))
+    print("index_map'{0}'".format(index_map))
 
 
 
@@ -476,15 +486,15 @@ def main():
     #helper()
     #img = "full_snap.png"
     #helper()
-    sort_squares()
-    square_recognition() # funktioniert aktuell nur mit python2.7
+    #sort_squares()
+    #square_recognition() # funktioniert aktuell nur mit python2.7
     #pass
     #read_pic()
     #corner_detection()
     #gradient()
-    laplacian = canny_edge()
-    get_anchor()
-    #clone_game(9,9)
+    #laplacian = canny_edge()
+    #get_anchor()
+    clone_game(9,9)
 
 if __name__ == '__main__':
     """Main is actually not really useful, but for testing its here. Dont know
