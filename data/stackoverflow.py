@@ -22,6 +22,9 @@ print("initial_array"'{0}'.format(initial))
 
 img = cv2.imread("full_snap.png")
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+# https://stackoverflow.com/questions/23811638/convert-hsv-to-grayscale-in-opencv
+# https://stackoverflow.com/questions/34712144/merge-hsv-channels-under-opencv-3-in-python
+h, s, v = cv2.split(hsv)# gray is in the v-channel
 lower_red = np.array([100,80,50])
 upper_red = np.array([130,255,255])
 
