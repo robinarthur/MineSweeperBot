@@ -24,51 +24,46 @@ img = cv2.imread("full_snap.png")
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 # https://stackoverflow.com/questions/23811638/convert-hsv-to-grayscale-in-opencv
 # https://stackoverflow.com/questions/34712144/merge-hsv-channels-under-opencv-3-in-python
-h, s, v = cv2.split(hsv)# gray is in the v-channel
-lower_red = np.array([100,80,50])
-upper_red = np.array([130,255,255])
+h, s, v = cv2.split(hsv)
+s.fill(0)
+h.fill(255)
+# i have to do this because my blue had different shades of blue, and i dont get
+# the right range for my mask, so i turned everythin into white squares, so the
+# my detection routine works better.
 
-# Here we are defining range of bluecolor in HSV
-# This creates a mask of blue coloured
-# objects found in the frame.
-mask = cv2.inRange(hsv, lower_red, upper_red)
+hsv_image = cv2.merge([h, s, v])
+out = cv2.cvtColor(hsv_image, cv2.COLOR_HSV2BGR)
+cv2.imshow('example', out)
 
-# The bitwise and of the frame and mask is done so
-# that only the blue coloured objects are highlighted
-# and stored in res
-res = cv2.bitwise_and(img,img, mask= mask)
-cv2.imshow('img',img)
-cv2.imshow('mask',mask)
-cv2.imshow('res',res)
-# This displays the frame, mask
-# and res which we created in 3 separate windows.
+# grayscale for findContours
+imgray = cv2.cvtColor(out,cv2.COLOR_BGR2GRAY)
 
-im2, contours, hierarchy = cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-contour_img = cv2.drawContours(img, contours, -1, (255,255,255), -1)
+im2, contours, hierarchy = cv2.findContours(imgray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+contour_img = cv2.drawContours(imgray, contours, -1, (0,0,255), 1)
 cv2.imshow('contour_img', contour_img)
 
 # find contours in the thresholded image
-cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+cnts = cv2.findContours(imgray.copy(), cv2.RETR_EXTERNAL,
 	cv2.CHAIN_APPROX_SIMPLE)
 cnts = cnts[0] if imutils.is_cv2() else cnts[1]
 
-"""
+
 print("cnts'{0}'".format(cnts))
 i = 0
 # loop over the contours
 for c in cnts:
-    # compute the center of the contour
-    M = cv2.moments(c)
-    cX = int(M["m10"] / M["m00"])
-    cY = int(M["m01"] / M["m00"])
-    i=+1
-    # draw the contour and center of the shape on the image
-    cv2.drawContours(contour_img, [c], -1, (0, 255, 0), 2)
-    cv2.circle(contour_img, (cX, cY), 7, (255, 255, 255), -1)
-    print("Durchgang: %5d ,X: %6d ,Y: %6d" (i,cX,cY)
+	# compute the center of the contour
+	M = cv2.moments(c)
+	cX = int(M["m10"] / M["m00"])
+	cY = int(M["m01"] / M["m00"])
+	i=+1
+	# draw the contour and the center of the shape on the image
+	cv2.drawContours(contour_img, [c], -1, (128, 128, 128), 2)
+	cv2.circle(contour_img, (cX, cY), 7, (128, 128, 128), -1)
+	#print("Durchgang: %5d ,X: %6d ,Y: %6d" (str(i),str(cX),str(cY)))
 
 	cv2.imshow("Image", contour_img)
-    cv2.waitKey(0)
+	cv2.waitKey(0)
 """
 # loop over the contours
 for c in cnts:
@@ -85,6 +80,6 @@ for c in cnts:
 	cv2.imshow("Image", contour_img)
 	cv2.waitKey(0)
 
-
+"""
 # Destroys all of the HighGUI windows.
 cv2.destroyAllWindows()
