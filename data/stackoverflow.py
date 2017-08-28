@@ -24,31 +24,24 @@ img = cv2.imread("full_snap.png")
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 # https://stackoverflow.com/questions/23811638/convert-hsv-to-grayscale-in-opencv
 # https://stackoverflow.com/questions/34712144/merge-hsv-channels-under-opencv-3-in-python
-h, s, v = cv2.split(hsv)
-s.fill(0)
-h.fill(255)
+
 # i have to do this because my blue had different shades of blue, and i dont get
 # the right range for my mask, so i turned everythin into white squares, so the
 # my detection routine works better.
 
 hsv_image = cv2.merge([h, s, v])
 out = cv2.cvtColor(hsv_image, cv2.COLOR_HSV2BGR)
-cv2.imshow('example', out)
+cv2.imshow('out', out)
 
-# grayscale for findContours
-imgray = cv2.cvtColor(out,cv2.COLOR_BGR2GRAY)
 
-im2, contours, hierarchy = cv2.findContours(imgray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-contour_img = cv2.drawContours(imgray, contours, -1, (0,0,255), 1)
-cv2.imshow('contour_img', contour_img)
+
 
 # find contours in the thresholded image
-cnts = cv2.findContours(imgray.copy(), cv2.RETR_EXTERNAL,
+cnts = cv2.findContours(out.copy(), cv2.RETR_EXTERNAL,
 	cv2.CHAIN_APPROX_SIMPLE)
 cnts = cnts[0] if imutils.is_cv2() else cnts[1]
 
 
-print("cnts'{0}'".format(cnts))
 i = 0
 # loop over the contours
 for c in cnts:
@@ -58,8 +51,8 @@ for c in cnts:
 	cY = int(M["m01"] / M["m00"])
 	i=+1
 	# draw the contour and the center of the shape on the image
-	cv2.drawContours(contour_img, [c], -1, (128, 128, 128), 2)
-	cv2.circle(contour_img, (cX, cY), 7, (128, 128, 128), -1)
+	cv2.drawContours(img, [c], -1, (128, 128, 128), 2)
+	cv2.circle(img, (cX, cY), 7, (128, 128, 128), -1)
 	#print("Durchgang: %5d ,X: %6d ,Y: %6d" (str(i),str(cX),str(cY)))
 
 	cv2.imshow("Image", contour_img)
