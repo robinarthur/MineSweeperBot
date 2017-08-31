@@ -4,6 +4,7 @@ import pandas as pd
 
 img = cv2.imread('full_snap.png')
 """
+some of my blue pixels
 R: between 98 and 128
 G: between 176 and 211
 B: between 255
@@ -37,8 +38,8 @@ print("i", i)
 # board_width * board_height
 numberOfRows = 81
 
-# check if the length of cnts euqal to number of rows/ number of tiles ang then
-# go further
+# check if the length of cnts are euqal to the number of rows/ number of tiles
+# then go further
 
 # TODO
 
