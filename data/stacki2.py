@@ -50,10 +50,11 @@ print("i", i)
 # we know we're gonna have x rows of data, where x is the product of
 # board_width * board_height
 numberOfRows = 81
-# create dataframe
-df = pd.DataFrame(index=np.arange(numberOfRows, 0), columns=('x', 'y'))
-
-print("df", df)
+# create x,y data
+# df = pd.DataFrame(index=np.arange(numberOfRows, 0), columns=('x', 'y'))
+d = []
+print("d", d)
+print(type(d))
 
 
 for c in cnts:
@@ -61,18 +62,19 @@ for c in cnts:
 	M = cv2.moments(c)
 	cX = int(M["m10"] / M["m00"])
 	cY = int(M["m01"] / M["m00"])
-	# fill the dataframe with the coords
 
+	# fill the data with the coords
+	d.append({'tilenumber': i, 'X-Value': cX, 'Y-Value': cY})
 	i-=1
 	# draw the contour and the center of the shape on the image
 	#cv2.drawContours(img, [c], -1, (255, 255, 255), 2)
 	cv2.circle(img, (cX, cY), 1, (255, 255, 255), -1)
 	#print("Durchgang: %5d ,X: %6d ,Y: %6d" (str(i),str(cX),str(cY)))
 
+df = pd.DataFrame(d)
+print("x,y dataframe", df)
+
 cv2.imshow("Image_with_contours",img)
-print("cX", cX)
-print("cY", cY)
-print("i_end", i)
 
 
 cv2.waitKey(0)
