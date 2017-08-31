@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import imutils
 import pandas as pd
 
 img = cv2.imread('full_snap.png')
@@ -20,23 +19,10 @@ blue_MIN = np.array([255, 176, 98])
 blue_MAX = np.array([255, 211, 128])
 """
 https://pythonprogramming.net/color-filter-python-opencv-tutorial/
-
-lower_red = np.array([30,150,50])
-lower_red = cv2.cvtColor(lower_red,cv2.COLOR_BGR2HSV)
-upper_red = np.array([255,255,180])
-upper_red = cv2.cvtColor(upper_red,cv2.COLOR_BGR2HSV)
 """
 
-#hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-
+# find the blue pixels and save it in frame_threshed
 frame_threshed = cv2.inRange(img, blue_MIN, blue_MAX)
-#frame_threshed2 = cv2.inRange(frame_threshed, lower_red, upper_red)
-#out = cv2.cvtColor(frame_threshed,cv2.COLOR_HSV2BGR)
-cv2.imshow("input", img)
-#cv2.imshow("hsv_img", hsv_img)
-#cv2.imshow("frame_treshed", frame_threshed)
-#cv2.imshow("frame_threshed2", frame_threshed2)
-#cv2.imshow('out',out)
 
 # find contours in the thresholded image
 cnts = cv2.findContours(frame_threshed.copy(), cv2.RETR_EXTERNAL,
@@ -50,6 +36,12 @@ print("i", i)
 # we know we're gonna have x rows of data, where x is the product of
 # board_width * board_height
 numberOfRows = 81
+
+# check if the length of cnts euqal to number of rows/ number of tiles ang then
+# go further
+
+# TODO
+
 # create x,y data
 # df = pd.DataFrame(index=np.arange(numberOfRows, 0), columns=('x', 'y'))
 d = []
@@ -65,18 +57,17 @@ for c in cnts:
 
 	# fill the data with the coords
 	d.append({'tilenumber': i, 'X-Value': cX, 'Y-Value': cY})
+
+	# decrease i to go backwards, because tile number 81 is the first contour
 	i-=1
-	# draw the contour and the center of the shape on the image
-	#cv2.drawContours(img, [c], -1, (255, 255, 255), 2)
+	# draw the center of the shape on the image
 	cv2.circle(img, (cX, cY), 1, (255, 255, 255), -1)
-	#print("Durchgang: %5d ,X: %6d ,Y: %6d" (str(i),str(cX),str(cY)))
 
 df = pd.DataFrame(d)
-print("x,y dataframe", df)
 
+# only for debugging
+print("x,y dataframe", df)
 cv2.imshow("Image_with_contours",img)
 
-
-cv2.waitKey(0)
 # Destroys all of the HighGUI windows.
 cv2.destroyAllWindows()
