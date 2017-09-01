@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import pandas as pd
+import imutils
 
 img = cv2.imread('full_snap.png')
 """
@@ -65,6 +66,7 @@ for c in cnts:
 	cv2.circle(img, (cX, cY), 1, (255, 255, 255), -1)
 
 df = pd.DataFrame(d)
+df = df.set_index('tilenumber')
 
 # only for debugging
 print("x,y dataframe", df)
