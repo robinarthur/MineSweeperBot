@@ -16,3 +16,5 @@ def is_clickable(tilenumber):
         return True
     else:
         return False
+
+def cvt_tilenumber2info_map(tilenumber):

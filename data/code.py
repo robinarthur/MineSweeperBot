@@ -384,6 +384,11 @@ def clone_game(board_width, board_height):
 
     board_height : int
     board_width : int
+
+
+    ALL THE FOLLOWING PARAMETERS ARE STORED IN THE pd.DATAFRAME in the grid_detect
+    routine... there are no numpy arrays anymore.
+
     mine_map : numpy.ndarray
         the map that defines the minearea
         0 is empty

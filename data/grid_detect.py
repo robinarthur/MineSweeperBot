@@ -45,10 +45,25 @@ numberOfRows = 81
 # then go further
 
 # TODO
-
-# create x,y data
-# df = pd.DataFrame(index=np.arange(numberOfRows, 0), columns=('x', 'y'))
+"""
+    mine_map :
+        the column that defines the minearea
+        0 is empty
+        1 is mine
+    info_map :
+        the column that presents to the gamer from the Game
+        0-8 is number of mines in sorrounding.
+        9 is flagged field.
+        10 is questioned field.
+        11 is undiscovered field.
+        12 is a mine field
+"""
 d = []
+# info_map - tiles are undiscovered == 11 in the initialize routine
+undiscovered = 11
+# mine_map - tile are undiscovered (mine_map == empty == 0) in the initialize
+# routine
+no_bomb = 0
 print("d", d)
 print(type(d))
 
@@ -60,7 +75,8 @@ for c in cnts:
 	cY = int(M["m01"] / M["m00"])
 
 	# fill the data with the coords
-	d.append({'tilenumber': i, 'X-Value': cX, 'Y-Value': cY})
+	d.append({'tilenumber': i, 'X-Value': cX, 'Y-Value': cY,
+		'info_map': undiscovered, 'mine_map': no_bomb})
 
 	# decrease i to go backwards, because tile number 81 is the first contour
 	i-=1
