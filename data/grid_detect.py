@@ -64,6 +64,9 @@ undiscovered = 11
 # mine_map - tile are undiscovered (mine_map == empty == 0) in the initialize
 # routine
 no_bomb = 0
+# checked - change the value to 1, to show if the tile is checked once, could be
+# useless, because its the same like info_map !== 11 or so...
+checked = 0
 print("d", d)
 print(type(d))
 
@@ -76,7 +79,7 @@ for c in cnts:
 
 	# fill the data with the coords
 	d.append({'tilenumber': i, 'X-Value': cX, 'Y-Value': cY,
-		'info_map': undiscovered, 'mine_map': no_bomb})
+		'info_map': undiscovered, 'mine_map': no_bomb, 'checked': checked})
 
 	# decrease i to go backwards, because tile number 81 is the first contour
 	i-=1

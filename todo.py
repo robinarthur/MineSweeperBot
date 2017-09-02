@@ -18,3 +18,12 @@ def is_clickable(tilenumber):
         return False
 
 def cvt_tilenumber2info_map(tilenumber):
+    pass
+
+
+"""
+screen_detect.py
+-------
+get screenshots:
+1. - the hole screen
+2. - only one tile
