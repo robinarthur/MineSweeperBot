@@ -3,9 +3,7 @@ import numpy as np
 import pandas as pd
 import imutils
 
-f = 'full_snap.png'
-img = cv2.imread(f)
-cv2.imshow("test",img)
+img = cv2.imread('full_snap.png')
 """
 some of my blue pixels
 R: between 98 and 128
