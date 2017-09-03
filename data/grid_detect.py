@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 import imutils
 
-f = 'full_snap.png'
+#f = 'full_snap.png'
+f = 'screengrab.png'
 img = cv2.imread(f)
 cv2.imshow("test",img)
 """
