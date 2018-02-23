@@ -6,7 +6,7 @@
 
 import numpy as np
 from p5 import *
-import cell.py
+from cell import Cell
 
 
 def make2DArray(cols, rows):
