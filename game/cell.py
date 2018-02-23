@@ -1,12 +1,5 @@
-
-# coding: utf-8
-
-# In[ ]:
-
-
 import numpy as np
 from p5 import *
-import cell.py
 
 class Cell:
     def __init__(self, i, j, w):
@@ -74,11 +67,3 @@ class Cell:
                     pass
                 
                 neighbor = grid[i][j]
-
-        
-
-        
-        
-        
-        
-
