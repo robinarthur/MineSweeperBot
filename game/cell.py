@@ -1,5 +1,12 @@
+
+# coding: utf-8
+
+# In[ ]:
+
+
 import numpy as np
 from p5 import *
+from sketch import *
 
 class Cell:
     def __init__(self, i, j, w):
@@ -12,6 +19,8 @@ class Cell:
     
         self.bee = False
         self.revealed = False
+        
+        return
 
     def show(self):
         stroke(0)
@@ -67,3 +76,11 @@ class Cell:
                     pass
                 
                 neighbor = grid[i][j]
+
+        
+
+        
+        
+        
+        
+

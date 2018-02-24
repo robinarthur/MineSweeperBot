@@ -1,34 +1,40 @@
 
 # coding: utf-8
 
-# In[2]:
+# In[21]:
 
 
+import random
 import numpy as np
 from p5 import *
 from cell import Cell
 
 
 def make2DArray(cols, rows):
-    arr = np.array([range(cols) for row in range(rows)])
+    #arr = np.array([range(cols) for row in range(rows)])
+    #arr = np.zeros(shape = (rows,cols))
+    arr = [[0 for _i in range(cols)] for _j in range(rows)]
     return arr
 
 #var grid
 #var cols
 #var rows
 
-w = 20
+#w = 20 # this is now in setup()
 
-totalBees = 30
+#totalBees = 30 # this is now in setup ()
 
 def setup():
+    w = 20
+    totalBees = 30
     size(401, 401)
     cols = int(width / w)
     rows = int(height / w)
     grid = make2DArray(cols, rows)
     for col in range(cols):
         for row in range(rows):
-            grid[col][row] = Cell(col, row, w)
+            c = Cell(col, row, w)
+            grid[col][row] = c
             
     # Pick totalBees spots
     options = []
@@ -36,16 +42,15 @@ def setup():
         for row in range(rows):
             options.append([col, row])
             
-    
     for n in range(totalBees):
-        index = int(random(len(options)))
+        index = random.randint(0,len(options))
         choice = options[index]
         i = choice[0]
         j = choice[1]
         # Deletes that spot so it's no longer an option
-        options.remove(index, 1)
-        grid[i][j].bee = true
-    
+        print("choice",choice)
+        options.remove(choice)
+        grid[i][j].bee = True
     
     for col in range(cols):
         for row in range(rows):
