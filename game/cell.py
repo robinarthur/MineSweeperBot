@@ -42,6 +42,7 @@ class Cell:
         if self.bee:
             self.neighborCount = -1
             return
+        
         total = 0
         for xoff in range(-1,2):
             i = self.i + xoff

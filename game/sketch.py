@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[21]:
+# In[29]:
 
 
 import random
@@ -48,12 +48,14 @@ def setup():
         i = choice[0]
         j = choice[1]
         # Deletes that spot so it's no longer an option
-        print("choice",choice)
         options.remove(choice)
         grid[i][j].bee = True
     
     for col in range(cols):
         for row in range(rows):
+            print("grid[col][row]", grid[col][row])
+            x = grid[col][row]
+            print(x
             grid[col][row].countBees()
             
 
