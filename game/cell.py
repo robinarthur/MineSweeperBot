@@ -1,78 +1,77 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 import numpy as np
 from p5 import *
-from sketch import *
+#from sketch import *
 
-class Cell:
+class Cell(object):
     def __init__(self, i, j, w):
-        self.i = i
-        self.j = j
-        self.x = i * w
-        self.y = j * w
-        self.w = w
-        self.neighborCount = 0
+        self.__i = i
+        self.__j = j
+        self.__x = i * w
+        self.__y = j * w
+        self.__w = w
+        self.__neighborCount = 0
     
-        self.bee = False
-        self.revealed = False
+        self.__bee = False
+        self.__revealed = False
         
-        return
 
     def show(self):
         stroke(0)
         noFill()
-        rect(self.x, self.y, self.w, self.w)
-        if self.revealed:
-            if self.bee:
+        rect(self.__x, self.__y, self.__w, self.__w)
+        if self.__revealed:
+            if self.__bee:
                 fill(127)
-                ellipse(self.x + self.w * 0.5, self.y + self.y * 0.5, self.w * 0.5)
+                ellipse(self.__x + self.__w * 0.5, self.__y + self.__y * 0.5, self.__w * 0.5)
             else:
                 fill(200)
-                rect(self.x, self.y, self.w, self.w)
-                if self.neighborCount > 0:
+                rect(self.__x, self.__y, self.__w, self.__w)
+                if self.__neighborCount > 0:
                     textAlign(CENTER)
                     fill(0)
-                    text(self.neighborCount, self.x + self.w *0.5, self.y + self.w - 6)
+                    text(self.__neighborCount, self.__x + self.__w *0.5, self.__y + self.__w - 6)
                     
     def countBees(self):
-        if self.bee:
-            self.neighborCount = -1
+        if self.__bee:
+            self.__neighborCount = -1
             return
         
         total = 0
         for xoff in range(-1,2):
-            i = self.i + xoff
+            i = self.__i + xoff
             if i < 0 or i >= cols:
                 pass
             for yoff in range(-1,2):
-                j = self.y + yoff
+                j = self.__y + yoff
                 if j < 0 or j >= rows:
                     pass
                 neighbor = grid[i][j]
-                if neighbor.bee:
+                if neighbor.__bee:
                     total =+ 1
-        self.neighborCount = total
+        self.__neighborCount = total
     
     def contains(self, x, y):
-        return x > self.x and x < self.x + self.w and y > self.y and y < self.y + self.w
+        return x > self.__x and x < self.__x + self.__w and y > self.__y and y < self.__y + self.__w
     
     def reveal(self):
-        self.revealed = True
-        if self.neighborCount == 0:
+        self.__revealed = True
+        if self.__neighborCount == 0:
             # flood fill time
             self.floodFill()
     
     def floodFill(self):
         for xoff in range(-1, 2):
-            i = self.i + xoff
+            i = self.__i + xoff
             if i < 0 or i >= cols:
                 pass
             for yoff in range(-1, 2):
-                j = self.y + yoff
+                j = self.__y + yoff
                 if j < 0 or j >= rows:
                     pass
                 
@@ -84,4 +83,36 @@ class Cell:
         
         
         
+
+
+# In[19]:
+
+
+cols = 10
+rows = 10
+w = 40
+# function to print the grid row-wise
+def p(o):
+    for index, i in enumerate(o):
+        print(o[index])
+    print("")
+
+# make an empty grid with zeros
+grid = [[0 for x in range(cols)] for y in range(rows)]
+p(grid)
+# fill every element of the grid with a cell object
+for col in range(cols):
+    for row in range(rows):
+        c = Cell(col, row, w)
+        grid[col][row] = c    
+
+        
+p(grid)
+
+
+# In[20]:
+
+
+t = grid[5][5]
+print(t.reveal)
 

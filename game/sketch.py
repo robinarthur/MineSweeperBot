@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[29]:
+# In[2]:
 
 
 import random
@@ -55,13 +55,21 @@ def setup():
         for row in range(rows):
             print("grid[col][row]", grid[col][row])
             x = grid[col][row]
-            print(x
-            grid[col][row].countBees()
+            print(x)
+            print(type(grid))
+            # test the single elements
+            
+            
+            
+            
+            #grid[col][row].countBees()
             
 
 def gameOver():
     for col in range(cols):
         for row in range(rows):
+            print(row)
+            print(col)
             grid[col][row].revealed = true
         
 
