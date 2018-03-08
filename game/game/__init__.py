@@ -50,6 +50,48 @@ def main():
         pygame.display.flip()
 
 
+Class Cell(object):
+    def __init__(self, i, j, w):
+        self.__i = i
+        self.__j = j
+        self.__x = i * w
+        self.__y = j * w
+        self.__w = w
+        self.__neighborCount = 0
+        
+        self.__mine = False
+        self.__revealed = False
+        
+    def show(self):
+        continue
+        
+    def countMines(self):
+        continue
+    
+    def contains(self, x, y):
+        pass
+    
+    def reveal(self):
+        pass
+    
+    def floodFill(self):
+        pass
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     # unsere Main Funktion aufrufen.
     main()
