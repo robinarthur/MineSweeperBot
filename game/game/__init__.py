@@ -15,7 +15,7 @@ def main():
     
     # Titel des Fensters setzen, Mauszeiger nicht verstecken und Tastendrücke wiederholt
     # senden
-    pygame.display.set_caption('Pygame-Tutorial: Grundlagen')
+    pygame.display.set_caption('p5.py - Minesweeper')
     pygame.mouse.set_visible(1)
     pygame.key.set_repeat(1, 30)
     
@@ -50,7 +50,7 @@ def main():
         pygame.display.flip()
 
 
-Class Cell:
+class Cell:
     def __init__(self, i, j, w):
         self.__i = i
         self.__j = j
@@ -63,18 +63,65 @@ Class Cell:
         self.__revealed = False
         
     def show(self):
-        continue
+        # stroke(0)
+        # noFill()
+        # rect(self.__x, self.__Y, self.__w, self.__w)
+        if self.__revealed:
+            if self.__mine:
+                # fill(127)
+                # ellipse(self.__x + self.__w * 0.5, self.__y + self.__y * 0.5, self.__w * 0.5)
+                pass
+            else:
+                # fill(200)
+                # rect(self.__x, self.__y, self.__w, self.__w)
+                if self.__neighborCount > 0:
+                    # textAlign(CENTER)
+                    # fill(0)
+                    # text(self.__neighborCount, self.__x + self.__w *0.5, self.__y + self.__w - 6)
+                    pass
+
         
     def countMines(self):
-        continue
+        if self.__mine:
+            self.__neighborCount = -1
+            return
+        
+        total = 0
+        for xoff in range(-1,2):
+            i = self.__i + xoff
+            if i < 0 or i >= cols:
+                pass
+            for yoff in range(-1,2):
+                j = self.__y + yoff
+                if j < 0 or j >= rows:
+                    pass
+                neighbor = grid[i][j]
+                if neighbor.__mine:
+                    total =+ 1
+        self.__neighborCount = total
+        pass
     
     def contains(self, x, y):
-        pass
+        return x > self.__x and x < self.__x + self.__w and y > self.__y and y < self.__y + self.__w
     
     def reveal(self):
-        pass
+        self.__revealed = True
+        if self.__neighborCount == 0:
+            # flood fill time
+            self.floodFill()
     
     def floodFill(self):
+        for xoff in range(-1, 2):
+            i = self.__i + xoff
+            if i < 0 or i >= cols:
+                pass
+            for yoff in range(-1, 2):
+                j = self.__y + yoff
+                if j < 0 or j >= rows:
+                    pass
+                
+                # qneighbor = grid[i][j]
+
         pass
     
     
