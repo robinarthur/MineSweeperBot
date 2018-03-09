@@ -50,7 +50,7 @@ def main():
         pygame.display.flip()
 
 
-Class Cell(object):
+Class Cell:
     def __init__(self, i, j, w):
         self.__i = i
         self.__j = j
