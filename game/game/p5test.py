@@ -47,6 +47,10 @@ def setup():
     
     for n in range(totalMines):
         index = int(random.randint(0, len(options)))
+        choice = options[index]
+        print("choice", choice)
+        print("index", index)
+        
         i = choice[0]
         j = choice[1]
         # Delete that spot so its no longer an option
@@ -68,16 +72,21 @@ def draw():
 
 
 def gameOver():
-    pass
+    for i in range(cols):
+        for j in range(rows):
+            grid[i][j].__revealed == True
 
-    
-    
-    
-    
+
     ###### to be continued here
 
 def mousePressed():
-    pass
+    for i in range(cols):
+        for j in range(rows):
+            if grid[i][j].contains(mouseX, mouseY):
+                grid[i][j].reveal()
+                
+                if grid[i][j].mine:
+                    gameOver()
 
 
 
@@ -101,7 +110,6 @@ class Cell:
             if self.__mine:
                 fill(127)
                 ellipse(self.__x + self.__w * 0.5, self.__y + self.__y * 0.5, self.__w * 0.5)
-                pass
             else:
                 fill(200)
                 rect(self.__x, self.__y, self.__w, self.__w)
@@ -109,7 +117,6 @@ class Cell:
                     textAlign(CENTER)
                     fill(0)
                     text(self.__neighborCount, self.__x + self.__w *0.5, self.__y + self.__w - 6)
-                    pass
 
     
     
