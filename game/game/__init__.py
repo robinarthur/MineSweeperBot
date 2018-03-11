@@ -11,7 +11,6 @@ import pygame
 
 # p5.py from http://github.com/p5py/p5 Modul importieren
 from p5 import *
-from cell import rows
 
 
 

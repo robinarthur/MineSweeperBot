@@ -1,5 +1,8 @@
 from p5 import *
 from game import Cell
+from cell import grid, rows
+import random
+
 
 
 def make2DArray(cols, rows):
@@ -12,6 +15,12 @@ def make2DArray(cols, rows):
 
 
 def setup():
+    global w
+    global totalMines
+    global grid
+    global rows
+    global cols
+    
     w = 20
     totalMines = 30
     width = 401
@@ -27,15 +36,49 @@ def setup():
     for col in range(len(grid)):
         for row in range(len(grid[0])):
             grid[col][row] = Cell(col, row, w)
-            print("col, row", col, row)
     
-    ###### to be continued here
     
+    # Pick totalMines spots
+    options = []
+    for i in range(cols):
+        for j in range(rows):
+            options.append([i, j])
+            
+    
+    for n in range(totalMines):
+        index = int(random.randint(0, len(options)))
+        i = choice[0]
+        j = choice[1]
+        # Delete that spot so its no longer an option
+        options.remove(choice)
+        grid[i][j] = True
+        
+        
+    for i in range(cols):
+        for j in range(rows):
+            grid[i][j].countMines()
+       
     
 def draw():
     background(255)
     
+    for i in range(cols):
+        for j in range(rows):
+            grid[i][j].show()
+
+
+def gameOver():
     pass
+
+    
+    
+    
+    
+    ###### to be continued here
+
+def mousePressed():
+    pass
+
 
 
 class Cell:
