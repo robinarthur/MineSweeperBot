@@ -46,7 +46,8 @@ def setup():
             
     
     for n in range(totalMines):
-        index = int(random.randint(0, len(options)))
+        index = int(random.randint(1, len(options)+1))
+        print("index", index)
         choice = options[index]
         print("choice", choice)
         print("index", index)
@@ -55,12 +56,12 @@ def setup():
         j = choice[1]
         # Delete that spot so its no longer an option
         options.remove(choice)
-        grid[i][j] = True
-        
+        grid[i][j].__mine = True
         
     for i in range(cols):
         for j in range(rows):
-            grid[i][j].countMines()
+            c = grid[i][j]
+            c.countMines()
        
     
 def draw():
@@ -76,8 +77,6 @@ def gameOver():
         for j in range(rows):
             grid[i][j].__revealed == True
 
-
-    ###### to be continued here
 
 def mousePressed():
     for i in range(cols):
@@ -104,8 +103,8 @@ class Cell:
         
     def show(self):
         stroke(0)
-        noFill()
-        rect(self.__x, self.__Y, self.__w, self.__w)
+        #nofill()
+        rect(self.__x, self.__y, self.__w, self.__w)
         if self.__revealed:
             if self.__mine:
                 fill(127)
@@ -118,6 +117,53 @@ class Cell:
                     fill(0)
                     text(self.__neighborCount, self.__x + self.__w *0.5, self.__y + self.__w - 6)
 
+
+    def countMines(self):
+        if self.__mine:
+            self.__neighborCount = -1
+            return
+        
+        total = 0
+        for xoff in range(-1, 2):
+            i = self.__i + xoff
+            if i < 0 or i >= cols:
+                continue
+            for yoff in range(-1, 2):
+                j = self.__y + yoff
+                if j < 0 or j >= rows:
+                    continue
+                neighbor = grid[i][j]
+                if neighbor.__mine:
+                    total =+1
+        self.__neighborCount = total
+                      
     
+    def contains(self, x, y):
+        return x > self.__x and x < self.__x + self.__w and y > self.__y and y < self.__y + self.__w
+    
+    
+    def reveal(self):
+        self.__revealed = True
+        if self.__neighborCount == 0:
+            # floodFill time
+            self.floodFill()
+    
+    def floodFill(self):
+        for xoff in range(-1, 2):
+            i = self.__i + xoff
+            if i < 0 or i >= cols:
+                continue
+            for yoff in range(-1, 2):
+                j = self.__y + yoff
+                if j < 0 or j >= rows:
+                    continue
+                
+                neighbor = grid[i][j]
+                if not neighbor.__revealed:
+                    neighbor.reveal()
+
+
+
+    ###### to be continued here  
     
 run()
