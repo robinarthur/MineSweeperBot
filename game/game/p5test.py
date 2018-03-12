@@ -1,7 +1,8 @@
 from p5 import *
-from game import Cell
-from cell import grid, rows
+#from game import Cell
+#from cell import grid, rows
 import random
+from p5.core.primitives import rect_mode
 
 
 
@@ -103,8 +104,11 @@ class Cell:
         
     def show(self):
         stroke(0)
+        fill.enabled = False
         #nofill()
-        rect(self.__x, self.__y, self.__w, self.__w)
+        _rect_mode = 'CENTER'
+        print(self.__x, self.__y)
+        rect(self.__x, self.__y) #removed , self.__w, self.__w from the parantheses
         if self.__revealed:
             if self.__mine:
                 fill(127)
