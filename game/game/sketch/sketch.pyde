@@ -1,8 +1,3 @@
-from p5 import *
-#from game import Cell
-#from cell import grid, rows
-import random
-
 def make2DArray(cols, rows):
     #arr = np.array([range(cols) for row in range(rows)])
     #arr = np.zeros(shape = (rows,cols))
@@ -18,8 +13,8 @@ def setup():
     global grid
     global rows
     global cols
-    global height
     global width
+    global height
     
     w = 20
     totalMines = 30
@@ -46,7 +41,7 @@ def setup():
             
     
     for n in range(totalMines):
-        index = int(random.randint(1, len(options)+1))
+        index = int(random(1, len(options)+1))
         print("index", index)
         choice = options[index]
         print("choice", choice)
@@ -62,7 +57,7 @@ def setup():
         for j in range(rows):
             c = grid[i][j]
             c.countMines()
-       
+    
     
 def draw():
     background(255)
@@ -84,7 +79,7 @@ def mousePressed():
             if grid[i][j].contains(mouseX, mouseY):
                 grid[i][j].reveal()
                 
-                if grid[i][j].mine:
+                if grid[i][j].__mine:
                     gameOver()
 
 
@@ -103,11 +98,11 @@ class Cell:
         
     def show(self):
         stroke(0)
-        fill.enabled = False
+        noFill()
         #nofill()
         _rect_mode = 'CENTER'
         print(self.__x, self.__y)
-        rect(self.__x, self.__y, self.__w, self.__w) #removed , self.__w, self.__w from the parantheses
+        rect(self.__x, self.__y, self.__w, self.__w)
         if self.__revealed:
             if self.__mine:
                 fill(127)
@@ -139,7 +134,7 @@ class Cell:
                 if neighbor.__mine:
                     total =+1
         self.__neighborCount = total
-                      
+                    
     
     def contains(self, x, y):
         return x > self.__x and x < self.__x + self.__w and y > self.__y and y < self.__y + self.__w
@@ -166,7 +161,3 @@ class Cell:
                     neighbor.reveal()
 
 
-
-    ###### to be continued here  
-    
-run()
