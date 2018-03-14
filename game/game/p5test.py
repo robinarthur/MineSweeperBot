@@ -1,47 +1,50 @@
 from p5 import *
-#from game import Cell
-#from cell import grid, rows
 import random
 
-def make2DArray(cols, rows):
-    #arr = np.array([range(cols) for row in range(rows)])
-    #arr = np.zeros(shape = (rows,cols))
-    arr = [[0 for _i in range(cols)] for _j in range(rows)]
+
+
+def make2DArray(boardwidth, boardheight):
+    #arr = np.array([range(boardwidth) for row in range(boardheight)])
+    #arr = np.zeros(shape = (boardheight,boardwidth))
+    arr = [[0 for _i in range(boardwidth)] for _j in range(boardheight)]
     return arr
 
 
-
-
 def setup():
-    global w
+    global cellsize
     global totalMines
     global grid
-    global rows
-    global cols
-    global height
-    global width
+    global boardheight
+    global boardwidth
+    global boardrects
+    global windowheight
+    global windowwidth
     
-    w = 20
+    cellsize = 20
     totalMines = 30
-    width = 401
-    height = 401
-    size(width+100,height+100)
+    windowwidth = 600
+    windowheight = 600
     
-    cols = int(width / w)
-    rows = int(height / w)
+    size(windowwidth, windowheight)
     
-    grid = make2DArray(cols, rows)
+    boardwidth = int(windowwidth // cellsize)
+    boardheight = int(windowheight // cellsize)
+    
+    xmargin = int((windowwidth - cellsize * boardwidth) / 2)
+    ymargin = int((windowwidth - cellsize * boardheight) / 2)
+    
+    grid = make2DArray(boardwidth, boardheight)
     
     # fill every "cell" with a cell object
     for col in range(len(grid)):
         for row in range(len(grid[0])):
-            grid[col][row] = Cell(col, row, w)
+            grid[col][row] = Cell(col, row, cellsize)
     
     
     # Pick totalMines spots
     options = []
-    for i in range(cols):
-        for j in range(rows):
+    for i in range(boardwidth):
+        for j in range(boardheight):
             options.append([i, j])
             
     
@@ -58,8 +61,8 @@ def setup():
         options.remove(choice)
         grid[i][j].__mine = True
         
-    for i in range(cols):
-        for j in range(rows):
+    for i in range(boardwidth):
+        for j in range(boardheight):
             c = grid[i][j]
             c.countMines()
        
@@ -67,21 +70,21 @@ def setup():
 def draw():
     background(255)
     
-    for i in range(cols):
-        for j in range(rows):
+    for i in range(boardwidth):
+        for j in range(boardheight):
             grid[i][j].show()
 
 
 def gameOver():
-    for i in range(cols):
-        for j in range(rows):
+    for i in range(boardwidth):
+        for j in range(boardheight):
             grid[i][j].__revealed == True
 
 
 def mousePressed():
-    for i in range(cols):
-        for j in range(rows):
-            if grid[i][j].contains(mouseX, mouseY):
+    for i in range(boardwidth):
+        for j in range(boardheight):
+            if grid[i][j].contains(mouse_x, mouse_y):
                 grid[i][j].reveal()
                 
                 if grid[i][j].mine:
@@ -90,12 +93,12 @@ def mousePressed():
 
 
 class Cell:
-    def __init__(self, i, j, w):
+    def __init__(self, i, j, cellsize):
         self.__i = i
         self.__j = j
-        self.__x = i * w
-        self.__y = j * w
-        self.__w = w
+        self.__x = i * cellsize
+        self.__y = j * cellsize
+        self.__cellsize = cellsize
         self.__neighborCount = 0
         
         self.__mine = False
@@ -107,18 +110,20 @@ class Cell:
         #nofill()
         _rect_mode = 'CENTER'
         print(self.__x, self.__y)
-        rect(self.__x, self.__y, self.__w, self.__w) #removed , self.__w, self.__w from the parantheses
+        rect(self.__x, self.__y, self.__cellsize, self.__cellsize) #removed , self.__cellsize, self.__cellsize from the parantheses
         if self.__revealed:
             if self.__mine:
                 fill(127)
-                ellipse(self.__x + self.__w * 0.5, self.__y + self.__y * 0.5, self.__w * 0.5)
+                ellipse(self.__x + self.__cellsize * 0.5, self.__y + self.__y * 0.5, self.__cellsize * 0.5)
             else:
                 fill(200)
-                rect(self.__x, self.__y, self.__w, self.__w)
+                rect(self.__x, self.__y, self.__cellsize, self.__cellsize)
                 if self.__neighborCount > 0:
+                    # textAlign is not integrated yet in p5.py 
                     textAlign(CENTER)
                     fill(0)
-                    text(self.__neighborCount, self.__x + self.__w *0.5, self.__y + self.__w - 6)
+                    # text is not integrated yet in p5.py
+                    text(self.__neighborCount, self.__x + self.__cellsize *0.5, self.__y + self.__cellsize - 6)
 
 
     def countMines(self):
@@ -129,11 +134,11 @@ class Cell:
         total = 0
         for xoff in range(-1, 2):
             i = self.__i + xoff
-            if i < 0 or i >= cols:
+            if i < 0 or i >= boardwidth:
                 continue
             for yoff in range(-1, 2):
                 j = self.__y + yoff
-                if j < 0 or j >= rows:
+                if j < 0 or j >= boardheight:
                     continue
                 neighbor = grid[i][j]
                 if neighbor.__mine:
@@ -142,7 +147,7 @@ class Cell:
                       
     
     def contains(self, x, y):
-        return x > self.__x and x < self.__x + self.__w and y > self.__y and y < self.__y + self.__w
+        return x > self.__x and x < self.__x + self.__cellsize and y > self.__y and y < self.__y + self.__cellsize
     
     
     def reveal(self):
@@ -154,11 +159,11 @@ class Cell:
     def floodFill(self):
         for xoff in range(-1, 2):
             i = self.__i + xoff
-            if i < 0 or i >= cols:
+            if i < 0 or i >= boardwidth:
                 continue
             for yoff in range(-1, 2):
                 j = self.__y + yoff
-                if j < 0 or j >= rows:
+                if j < 0 or j >= boardheight:
                     continue
                 
                 neighbor = grid[i][j]
