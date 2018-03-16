@@ -1,6 +1,5 @@
 from p5 import *
-import random
-
+import random, pygame
 
 
 def make2DArray(boardwidth, boardheight):
@@ -33,12 +32,25 @@ def setup():
     xmargin = int((windowwidth - cellsize * boardwidth) / 2)
     ymargin = int((windowwidth - cellsize * boardheight) / 2)
     
-    grid = make2DArray(boardwidth, boardheight)
+    #grid = make2DArray(boardwidth, boardheight)
     
     # fill every "cell" with a cell object
-    for col in range(len(grid)):
-        for row in range(len(grid[0])):
-            grid[col][row] = Cell(col, row, cellsize)
+    #for col in range(len(grid)):
+    #    for row in range(len(grid[0])):
+    #        grid[col][row] = Cell(col, row, cellsize)
+    # Create pygame.Rect objects for each board space to
+    # do board-coordinate-to-pixel-coordinate conversions.
+    grid = []
+    for x in range(boardwidth):
+        grid.append([])
+        for y in range(boardheight):
+            r = pygame.Rect((xmargin + (x*cellsize),
+                             ymargin + (y*cellsize),
+                             cellsize,
+                             cellsize))
+            grid[x].append(r)
+    
+    
     
     
     # Pick totalMines spots
